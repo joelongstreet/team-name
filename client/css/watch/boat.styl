@@ -1,15 +1,13 @@
 .boat
-	margin 					50px
-	width 					15%
-	height 					70%
+	margin 					100px auto
+	width 					30%
 	background				$orange url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQIW2N8NdHlv1j+HkYGIICxwRxkARCbESQLYsBUgwVhKpFprIIABMcQBuC/YqIAAAAASUVORK5CYII=') repeat
 	box-shadow 				6px 6px 0 $orange2
 	position				relative
-	font-family 			$SilkScreen
 	transition 				.5s all ease-out
 
 	.head
-		h1
+		h2
 			padding 	 	10px 0
 		.block
 			float 			left
@@ -20,7 +18,6 @@
 			box-shadow 		2px 2px 0 $red2
 			&:nth-child(2)
 				margin-left 55px
-
 
 	&.row
 		margin-top 			0px
@@ -62,27 +59,39 @@
 		width 				40px
 		height 				40px
 		left 				10%
+		transition 			.5s all ease-out
+
+		.full
+			background-color $grey
+			width			90%
+			height			90%
+
+		&.sweat
+			background-color $red
 
 		.ore
 			position			relative
-			left 				-40px
+			left 				-85px
 			top 				17px
 
 			&.row
 				animation       row_ore 1.5s
 
+			&.lose
+				animation       lose_ore 1.5s
+
 			.handle
 				position		absolute
-				width			35px
-				height 			4px
+				width			75px
+				height 			6px
 				background 		$red url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2NkwAIYsQoeMLX/D5NwOH0QrAi7SmzaAd4IBAZXkxVSAAAAAElFTkSuQmCC') repeat
 				box-shadow 		2px 2px 0 $red2
 			.paddle
 				position		absolute
-				margin-left 	-15px
-				margin-top		-6px
-				width 			25px
-				height 			15px
+				margin-left 	-35px
+				margin-top		-10px
+				width 			45px
+				height 			25px
 				background 		$red url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2NkwAIYsQoeMLX/D5NwOH0QrAi7SmzaAd4IBAZXkxVSAAAAAElFTkSuQmCC') repeat
 				box-shadow 		2px 2px 0 $red2
 
@@ -95,6 +104,6 @@
 				right 			-45px
 				.paddle
 					margin-left 0
-					margin-right -15px 
+					margin-right -75px
 					left 		auto
 					right 		0
