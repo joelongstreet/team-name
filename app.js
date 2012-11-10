@@ -41,6 +41,10 @@ ss.http.route('/login', function(req, res){
   res.serveClient('login');
 });
 
+ss.http.route('/remote', function(req, res){
+  res.serveClient('remote');
+});
+
 ss.http.route('/mobile-login', function(req, res){
   res.serveClient('mobile_login');
 });

@@ -20,9 +20,7 @@ class window.Remote
             console.log winner
             @listener.die()
             @listener = null
-
-        @listener = new RowListener()
-
+            
 
 class RowListener
 
@@ -48,24 +46,25 @@ class RowListener
                 ss.rpc 'remote.broDown'
             ), 3000
 
-        window.ondevicemotion = ->
+        window.ondevicemotion = (e) ->
                 if didAccelerationChange then return
 
                 if (typeof lastAcceleration != 'undefined')
 
-                    currentSign = e.acceleration.x >= 0 ? 1: 0
+                    currentSign = e.accelerationIncludingGravity.x >= 0 ? 1: 0
                     lastSign = lastAcceleration >= 0 ? 1 : 0
 
-                    if (currentSign != lastSign && Math.abs(e.acceleration.x) > threshold)
+                    if (currentSign != lastSign && Math.abs(e.accelerationIncludingGravity.x) > threshold)
                         didAccelerationChange = true;
                         lastAcceleration = undefined;
 
-                lastAcceleration = e.acceleration.x;
+                lastAcceleration = e.accelerationIncludingGravity.x;
 
         setInterval (->
                 
             if didAccelerationChange
                 ss.rpc 'remote.rowBro'
+
 
             didAccelerationChange = false;
 
