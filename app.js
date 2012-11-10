@@ -10,7 +10,7 @@ var http = require('http'),
   ss.client.define('main', {
     view: 'app.jade',
     css:  ['libs/reset.css', 'app.styl'],
-    code: ['libs/jquery.min.js', 'common', 'app'],
+    code: ['libs/jquery.min.js', 'app'],
     tmpl: '*'
   });
 
@@ -18,7 +18,7 @@ var http = require('http'),
   ss.client.define('remote', {
     view: 'remote.jade',
     css:  ['libs/reset.css', 'app.styl'],
-    code: ['libs/jquery.min.js', 'common', 'app'],
+    code: ['libs/jquery.min.js', 'app'],
     tmpl: ['common', 'remote']
   });
 
