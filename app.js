@@ -11,6 +11,13 @@ ss.client.define('main', {
   tmpl: '*'
 });
 
+ss.client.define('main', {
+  view: 'app.jade',
+  css:  ['libs/reset.css', 'app.styl'],
+  code: ['libs/jquery.min.js', 'app'],
+  tmpl: '*'
+});
+
 // Define a single-page client called 'remote'
 ss.client.define('remote', {
   view: 'remote.jade',
