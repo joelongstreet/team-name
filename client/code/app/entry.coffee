@@ -14,8 +14,6 @@ ss.server.on 'ready', ->
   # Wait for the DOM to finish loading
   jQuery ->
     
-    #require('/common/debugging')
-    
     # Load app
     require('/app')
-    
+    require('/game')

@@ -1,0 +1,60 @@
+extends layout
+
+block head
+    script(type="text/javascript") 
+        $(document).ready(function () {
+            var lastAcceleration = undefined;
+            var didAccelerationChange = false;
+            var threshold = 3;
+            var touchTimeout;
+
+            window.addEventListener("touchstart", function () {
+                clearTimeout(touchTimeout);
+                touchTimeout = null;
+                isHeldDown = true;
+            });
+
+            window.addEventListener("touchend", function () {
+                if (touchTimeout) {
+                    return;
+                }
+
+                touchTimeout = setTimeout(function () {
+                    isHeldDown = false;
+                    touchTimeout = null;
+                    
+                    ss.rpc('remote.broDown');
+                }, 3000);
+            });
+
+            window.ondevicemotion = function (e) {
+                if (didAccelerationChange) {
+                    return;
+                }
+
+                if (typeof lastAcceleration !== 'undefined') {
+
+                    var currentSign = e.acceleration.x >= 0 ? 1: 0;
+                    var lastSign = lastAcceleration >= 0 ? 1 : 0;
+
+                    if (currentSign !== lastSign && Math.abs(e.acceleration.x) > threshold) {
+                        didAccelerationChange = true;
+                        lastAcceleration = undefined;
+                    }
+                }
+
+                lastAcceleration = e.acceleration.x;
+            };
+
+            setInterval(function () {
+                
+                if (didAccelerationChange) {
+                    ss.rpc('remote.rowBro');
+                    console.log(lastAcceleration)
+                }
+
+                didAccelerationChange = false;
+            }, 100);
+        });
+
+block content
