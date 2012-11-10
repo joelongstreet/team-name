@@ -47,7 +47,6 @@ exports.list_teams = ()->
             return
             
         for pair in res
-            console.log "pair", pair
             html += ss.tmpl['login-gamelist'].render(pair)
             
         $('.current_games').html( html )

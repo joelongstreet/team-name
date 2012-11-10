@@ -30,26 +30,10 @@ class GameMaster extends EventEmitter
                     progress: progress
         
         race.on 'end', (winner) =>
-            ss.publish.channel 'mm', 'end', 
-                winner: winner
-            
-            @removeRace race
+            @endRace race
 
-            for t in pair
-                ss.publish.channel t.id, 'end',                     
-                    id: t.id,
-                    winner: winner
-        
         race.start()
-        
-        ss.publish.channel 'mm', 'start', 
-            teams: pair
-            
-        for t in pair
-            ss.publish.channel t.id, 'start', 
-                id: t.id,
-                teams: pair
-        
+
     findTeam: (id) ->
         for r in @races
             for t in r.teams
@@ -68,18 +52,35 @@ class GameMaster extends EventEmitter
             index = @teams.indexOf t
             @teams.splice index, 1 if index >= 0
     
-    removeRace: (race) ->
+    endRace: (race, winner) ->
+        ss.publish.channel race.id, 'end',                     
+            raceId: race.id,
+            winner: winner
+
         for r in @races
             index = @races.indexOf r
             @races.splice index, 1 if index >= 0
         
     createRace: (teams) ->
         race = new Race(teams)
-
-        for t in teams
-            t.start race.id
-
         @races.push race
+       
+        # put all people in the race channel for progress updates
+        for t in teams
+            for p in t.persons
+                ss.session.find p.sessionId, p.socketId, (s) ->
+                    s.channel.subscribe race.id if s
+ 
+        # let the match maker know we've started a new race
+        ss.publish.channel 'mm', 'start', 
+            raceId: race.id
+            teams: teams
+        
+        # tell those who are racing we've begun
+        ss.publish.channel race.id, 'start', 
+            raceId: race.id
+            teams: teams
+        
         race
 
 module.exports = new GameMaster()
