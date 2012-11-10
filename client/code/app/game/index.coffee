@@ -2,6 +2,8 @@ class window.Game
 
     constructor : (boats) ->
 
+        @stats = new Stats()
+        @stats.render()
         #ss.event.on 'start', (boats) ->
 
         @mini_boats = []
@@ -16,12 +18,12 @@ class window.Game
         ss.event.on 'surge', (surge_data) =>
             if surge_data.id == @da_boat.id
                 @da_boat.move_forward()
+                @stats.update(surge_data)
                 @move_forward()
             else
                 for boat in @mini_boats
                     if surge_data.id == boat.id
                         boat.update_position(surge_data.position)
-
 
         ss.event.on 'coach', () =>
             @da_boat.row_callout()

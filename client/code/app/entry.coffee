@@ -19,6 +19,7 @@ ss.server.on 'ready', ->
     require('/game/fireworks')
     require('/game/boat')
     require('/game/miniBoat')
+    require('/game/stats')
 
     require('/login')
     require('/remote')
