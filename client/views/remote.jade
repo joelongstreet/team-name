@@ -1,60 +1,21 @@
-extends layout
+block vars
+    - var bodyID    = 'login'
+    - var bodyClass = 'mobile'
 
-block head
+extends login
+
+block main
+
+    h2 Your Room Code is
+        span.code= 12345
+    p Tune into "http://rowbro.com/#{12345}" to watch
+
+    a.btn.start(href='#') Start
+
+    .waiting.modal
+        p Waiting for game to start
+
     script(type="text/javascript") 
-        $(document).ready(function () {
-            var lastAcceleration = undefined;
-            var didAccelerationChange = false;
-            var threshold = 3;
-            var touchTimeout;
-
-            window.addEventListener("touchstart", function () {
-                clearTimeout(touchTimeout);
-                touchTimeout = null;
-                isHeldDown = true;
-            });
-
-            window.addEventListener("touchend", function () {
-                if (touchTimeout) {
-                    return;
-                }
-
-                touchTimeout = setTimeout(function () {
-                    isHeldDown = false;
-                    touchTimeout = null;
-                    
-                    ss.rpc('remote.broDown');
-                }, 3000);
-            });
-
-            window.ondevicemotion = function (e) {
-                if (didAccelerationChange) {
-                    return;
-                }
-
-                if (typeof lastAcceleration !== 'undefined') {
-
-                    var currentSign = e.acceleration.x >= 0 ? 1: 0;
-                    var lastSign = lastAcceleration >= 0 ? 1 : 0;
-
-                    if (currentSign !== lastSign && Math.abs(e.acceleration.x) > threshold) {
-                        didAccelerationChange = true;
-                        lastAcceleration = undefined;
-                    }
-                }
-
-                lastAcceleration = e.acceleration.x;
-            };
-
-            setInterval(function () {
-                
-                if (didAccelerationChange) {
-                    ss.rpc('remote.rowBro');
-                    console.log(lastAcceleration)
-                }
-
-                didAccelerationChange = false;
-            }, 100);
+        ss.server.on('ready', function(){
+            remote = new Remote()
         });
-
-block content

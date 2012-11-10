@@ -12,10 +12,11 @@ ss.server.on 'reconnect', ->
 ss.server.on 'ready', ->
 
   # Wait for the DOM to finish loading
-  jQuery ->
+  $ ->
     
     # Load app
     require('/app')
     require('/game')
     require('/fireworks')
     require('/login')
+    require('/remote')
