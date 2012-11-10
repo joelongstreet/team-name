@@ -6,8 +6,8 @@ $ ->
   $('body#login .start').click ->
     $('.modal').addClass('show')
   
-  $('.login').submit (e)->
-    ss.rpc('team.join', $(this).children('input').val())
+  $('.login a').click (e)->
+    ss.rpc('team.join', $(this).siblings('input').val())
     return false
     
   $('.create_game .btn').click (e)->
