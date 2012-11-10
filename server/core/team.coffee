@@ -1,7 +1,7 @@
 EventEmitter = require('events').EventEmitter
 
-class Team > EventEmitter
-    
+class Team extends EventEmitter
+
     constructor: () ->
         @periods = []
         @period = 0
