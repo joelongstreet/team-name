@@ -43,9 +43,9 @@ if (ss.env === 'production') ss.client.packAssets();
 var server = http.Server(ss.http.middleware);
 server.listen(3000);
 
-// Start SocketStream
-ss.start(server);
-
 // Start ss-console
 var ssconsole = require('ss-console')(ss);
-consoleServer.listen(5000);
+ssconsole.listen(5000);
+
+// Start SocketStream
+ss.start(server);
