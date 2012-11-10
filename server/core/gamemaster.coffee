@@ -25,16 +25,22 @@ class GameMaster extends EventEmitter
 
 		race.on 'progress', (progress) ->
 			for t in pair
-				ss.publish.channel t.id, 'progress', progress
+				ss.publish.channel t.id, 'progress', 
+					id: t.id,
+					progress: progress
 		
 		race.on 'end', (winner) =>
 			for t in pair
-				ss.publish.channel t.id, 'end', winner
+				ss.publish.channel t.id, 'end', 					
+					id: t.id,
+					winner: winner
 		
 		race.start()
 
 		for t in pair
-			ss.publish.channel t.id, 'start', pair
+			ss.publish.channel t.id, 'start', 
+				id: t.id,
+				teams: pair
 		
 	findTeam: (id) ->
 		for t in @teams
