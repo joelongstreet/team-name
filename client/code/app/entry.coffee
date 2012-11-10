@@ -18,4 +18,5 @@ ss.server.on 'ready', ->
     require('/app')
     require('/game')
     require('/fireworks')
+    require('/login')
     require('/remote')
