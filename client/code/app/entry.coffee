@@ -17,3 +17,4 @@ ss.server.on 'ready', ->
     # Load app
     require('/app')
     require('/game')
+    require('/fireworks')

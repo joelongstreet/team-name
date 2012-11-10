@@ -1,0 +1,25 @@
+#fireworks
+    position        absolute
+    width           100%
+    height          100%
+    top             0
+    left            0
+
+.firework
+
+    .spark
+        position    absolute
+        transition  1s all ease-out
+
+        &.spark_0
+            background-color red
+        &.spark_1
+            background-color green
+        &.spark_2
+            background-color yellow
+        &.spark_3
+            background-color blue
+
+        &.explode
+            opacity          0
+            background-color white

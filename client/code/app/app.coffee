@@ -68,3 +68,7 @@ $ ->
     setTimeout (->
       $countdown.text '3'
     ), 1000
+
+  window.show_time = ->
+    $('body').append '<div id="fireworks"></div>'
+    fireworks = new Fireworks()
