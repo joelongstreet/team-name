@@ -4,8 +4,9 @@ class window.Game
 
         #ss.event.on 'start', (boats) ->
 
+        @mini_boats = []
         for boat in boats
-            miniView = new MiniBoat(boat)
+            @mini_boats.push new MiniBoat(boat)
 
         # the default selected boat is the first
         @da_boat = new Boat(boats[0])
@@ -16,6 +17,14 @@ class window.Game
             if surge_data.id == @da_boat.id
                 @da_boat.move_forward()
                 @move_forward()
+            else
+                for boat in @mini_boats
+                    if surge_data.id == boat.id
+                        boat.update_position(surge_data.position)
+
+
+        ss.event.on 'coach', () =>
+            @da_boat.row_callout()
 
         @countdown()
 
