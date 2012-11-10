@@ -19,13 +19,6 @@ ss.client.define('login', {
   tmpl: '*'
 });
 
-ss.client.define('mobile_login', {
-  view: 'mobile_login.jade',
-  css:  ['libs/reset.css', 'app.styl'],
-  code: ['libs/jquery.min.js', 'app'],
-  tmpl: '*'
-});
-
 // Define a single-page client called 'remote'
 ss.client.define('remote', {
   view: 'remote.jade',
