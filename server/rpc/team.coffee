@@ -20,14 +20,13 @@ exports.actions = (req, res, ss) ->
                 res "notFound", id
                 return
         
-        joined = team.addPerson req.session.clientId, (raceId) ->
-            req.session.channel.subscribe raceId
+        joined = team.addPerson req.sessionId, req.socketId
 
         unless joined
             res "full", id
             return
 
-        req.session.channel.subscribe(team.id)
+        req.session.channel.subscribe team.id
         req.session.team = team
         res null, team.id
         
