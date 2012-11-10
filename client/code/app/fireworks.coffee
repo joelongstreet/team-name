@@ -1,18 +1,23 @@
-class exports.Fireworks
+class window.Fireworks
 
     constructor : ->
 
+        console.log 'fireworkds initted'
+
         setInterval (->
+            console.log 'int running'
             x        = Math.floor(Math.random() * 200)
             y        = Math.floor(Math.random() * 300)
             firework = new Firework(x, y)
             firework.explode()
-        ), 1500
+        ), 2500
 
 
 class Firework
 
     constructor : (@x, @y) ->
+
+        console.log 'new firework generated'
 
         @$sparks = []
         i = 0
