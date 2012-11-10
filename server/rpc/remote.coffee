@@ -1,10 +1,12 @@
-exports.actions = (req, res, ss) ->
+gameMaster = require '../core/gamemaster'
 
+exports.actions = (req, res, ss) ->
     req.use 'session'
 
-	broDown: (message) ->
-		console.log 'bro down!'
+    broDown: (message) ->
+        console.log 'bro down!'
 
-	rowBro: (message) ->
-        console.log req.session
-        req.session.team.row 'joe'
+    rowBro: (message) ->
+        console.log gameMaster
+        team = gameMaster.findTeam req.session.team.id
+        team.row req.session.id
