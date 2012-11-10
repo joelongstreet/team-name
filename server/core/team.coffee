@@ -69,12 +69,20 @@ class Team extends EventEmitter
         currentPeriod.people[person] = 0 unless currentPeriod.people[person]
         currentPeriod.people[person]++
     
-    addPerson: (person) ->
+    addPerson: (person, cb) ->
         full = @isFull() 
         return false if full
-        @persons.push person
+        
+        @persons.push
+            person: person 
+            cb: cb
+
         @emit 'full' if @isFull()  
         return true
+
+    start: (raceId) ->
+        for p in @persons
+            p.cb raceId
 
     isFull: () ->
         @persons.length == @teamSize

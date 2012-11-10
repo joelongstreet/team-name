@@ -75,6 +75,10 @@ class GameMaster extends EventEmitter
         
     createRace: (teams) ->
         race = new Race(teams)
+
+        for t in teams
+            t.start race.id
+
         @races.push race
         race
 
