@@ -1,9 +1,12 @@
 class window.Boat
 
-    constructor : (@people) ->
+    constructor : (data) ->
 
-        ss.event.on 'surge', (data) =>
-            @move_forward()
+        @people = data.people
+
+        ss.event.on 'surge', (surge_data) =>
+            if surge_data.id == data.id
+                @move_forward()
 
         ss.event.on 'coach', () =>
             @row_callout()
@@ -14,9 +17,9 @@ class window.Boat
         for person in @people
             $people += ss.tmpl['game-person'].render(person)
 
-        @$boat = $(ss.tmpl['game-boat'].render())
-        @$boat.find('.people').append $people
-        @$rowCallout = @$boat.find('#row')
+        @$view = $(ss.tmpl['game-boat'].render())
+        @$view.find('.people').append $people
+        @$rowCallout = @$view.find('#row')
 
         css_class = ''
         
@@ -27,20 +30,28 @@ class window.Boat
             when 6 then css_class = 'six'
             when 8 then css_class = 'eight'
 
-        @$boat.addClass css_class
-        setTimeout (=>
-            @$boat.addClass 'show'
-        ), 50
+        @$view.addClass css_class
         
-        #@$boat.addClass 'start'
+        # remove the current boat if one exists
+        current_boat = $('#watching').find('.boat')
+        if current_boat.length
+            current_boat.addClass 'hide'
+            setTimeout (=>
+                current_boat.remove()
+            ), 500
 
-        return @$boat
+        setTimeout (=>
+            @$view.addClass 'show'
+        ), 50
+
+        # add it to the dom
+        $('#watching').append @$view
 
     move_forward : ->
 
-        $boat.addClass 'row'
-        setTimeout (->
-            $boat.removeClass 'row'
+        @$view.addClass 'row'
+        setTimeout (=>
+            @$view.removeClass 'row'
         ), 500
 
     row_callout : ->

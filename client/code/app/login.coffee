@@ -4,40 +4,52 @@ $ ->
     
     #=== "remote" login screen
     
-    $('body#login .start').click ->
+    $('body#login .start').click (e)->
+        e.preventDefault()
         $('.modal').addClass('show')
     
     
     #=== "screen" login screen
     
     # submit create game on click
-    $('.create_game .btn').click ->
-        ss.rpc 'team.join', null, (err, res)->
-            console.log("create team", arguments)
-            exports.list_teams()
-        return false
+    $('.create_game .btn').click (e)->
+        e.preventDefault()
+        exports.join_team()
+    
+    # submit on click    
+    $('.login .btn').click (e)->
+        e.preventDefault()
+        exports.join_team $(this).siblings('input').val()
     
     # submit on enter
     $('.login input').keyup (e)->
         if e.which == 13 then $('.login .btn').trigger("click")
     
-    # submit on click    
-    $('.login .btn').click ->
-        id = $(this).siblings('input').val();
-        ss.rpc 'team.join', id, (err, res)->
-            if err
-                throw(err)
-            else
-                exports.subscribeToTeam(id)
+    # submit on enter
+    $('.left').on 'click', '.game > .btn', (e)->
+        e.preventDefault()
+        exports.join_team $.trim($(this).siblings('.code').text())
     
-    #populate my local session object
+    # populate my local session object
     ss.rpc 'system.getSession', (res)->
         window.me = res
         exports.list_teams()
 
 
 # Shared Methods
+
+exports.join_team = (id)->
+    
+    ss.rpc 'team.join', id, (err, res)->
+        if err
+            console.error(id, err)
+        else
+            exports.list_teams()
+            exports.subscribe_team(id)
+
+
 exports.list_teams = ()-> 
+
     ss.rpc 'team.list', null, (err, res)->
         $container = $('.current_games')
         html = ""
@@ -50,7 +62,8 @@ exports.list_teams = ()->
             html += ss.tmpl['login-gamelist'].render(pair)
             
         $('.current_games').html( html )
-  
+
+
 exports.subscribe_team = (id)->
     
     ss.server.on 'surge', ->
