@@ -1,12 +1,14 @@
 team = require '../core/team'
+Race = require '../core/race'
+
+race = new Race()
+
+race.addTeam team
 
 exports.actions = (req, res, ss) ->
-  req.use('session')
+	race.ss = ss
+	broDown: (message) ->
+		console.log 'bro down!'
 
-  #req.use('debug', 'cyan');
-  
-  broDown: (message) ->
-    console.log 'bro down!'
-    
-  rowBro: (message) ->
-    team.row 'joe'
+	rowBro: (message) ->
+		team.row 'joe'

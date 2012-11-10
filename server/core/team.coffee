@@ -43,7 +43,7 @@ class Team extends EventEmitter
 
         if rowPercentage > .8
             current.success = true
-            @emit 'row', @period 
+            @emit 'surge', @period   
 
         @evaluateOverallPerformance()
 
@@ -58,9 +58,11 @@ class Team extends EventEmitter
 
         #if the team has been awesome make them go faster!
         if isSuperDuper and @interval >= .1
-            setInterval @interval * .8
+            @setRowInterval @interval * .8
+            for k,v of @periods
+                v.success = false
         else if @interval < .1
-            setInterval .1
+            @setRowInterval .1
 
     row: (client) ->
         current = @getCurrentPeriod()
