@@ -1,5 +1,6 @@
 # Server-side Code
 
+
 # Define actions which can be called from the client using ss.rpc('demo.ACTIONNAME', param1, param2...)
 exports.actions = (req, res, ss) ->
 
@@ -9,12 +10,11 @@ exports.actions = (req, res, ss) ->
   # Uncomment line below to use the middleware defined in server/middleware/example
   #req.use('example.authenticated')
 
-  #output all incoming requests
-  req.use('debug', 'green');
-
-  sendMessage: (message) ->
-    if message && message.length > 0            # Check for blank messages
-      ss.publish.all('newMessage', message)     # Broadcast the message to everyone
-      res(true)                                 # Confirm it was sent to the originating client
-    else
-      res(false)
+  listTeams: (message) ->
+    res("listTeams",true)
+  listGames: ()->
+    res("listGames",true)
+  joinTeam: ()->
+    res("joinTeam",true)
+  joinGame: ()->
+    res("joinGames",true)
