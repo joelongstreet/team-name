@@ -11,7 +11,7 @@ exports.actions = (req, res, ss) ->
     ###
     join: (id) ->
     
-        if typeof id is 'undefined'
+        if typeof id is 'undefined' or id is null
             team = new Team(req.randomizer.getString(5))
             gameMaster.addTeam team
         else
