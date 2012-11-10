@@ -1,19 +1,14 @@
 {
-  "name": "nko3-team-name",
-  "version": "0.0.0",
-  "description": "team.name",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:nko3/team-name.git"
-  },
+  "name": "rowbro",
+  "description": "Bro who row are bros named Joe",
+  "version": "0.0.1",
+  "author": "team-name <me@mydomain.com>",
+  "private": true,
+  "engines": { "node": ">= 0.8.14" },
   "dependencies": {
-  },
-  "engines": {
-    "node": "0.8.x"
-  },
-  "subdomain": "team-name.nko3"
+    "socketstream": "0.3.x",
+    "ss-coffee": "0.1.x",
+    "ss-stylus": "0.1.x",
+    "ss-hogan": "0.1.x"
+  }
 }
