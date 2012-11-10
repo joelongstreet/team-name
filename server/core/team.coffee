@@ -14,9 +14,9 @@ class Team extends EventEmitter
         newInterval = 1000 * @interval
 
         setInterval () =>
+            @emit 'coach', @interval
             @evaluateRows()
             @startNewPeriod(++@period % @trackCount)
-            @emit 'coach', @interval
         , newInterval 
 
         console.log "changed interval to #{newInterval}"
