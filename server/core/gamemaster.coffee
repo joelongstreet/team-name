@@ -30,8 +30,7 @@ class GameMaster extends EventEmitter
 					progress: progress
 		
 		race.on 'end', (winner) =>
-			ss.publish 'mm', 'end', 
-				id: t.id,
+			ss.publish.channel 'mm', 'end', 
 				winner: winner
 			
 			for t in pair
@@ -41,12 +40,11 @@ class GameMaster extends EventEmitter
 		
 		race.start()
 		
-		ss.publish 'mm', 'start', 
-			id: t.id,
+		ss.publish.channel 'mm', 'start', 
 			teams: pair
 			
 		for t in pair
-			ss.publish t.id, 'start', 
+			ss.publish.channel t.id, 'start', 
 				id: t.id,
 				teams: pair
 	
