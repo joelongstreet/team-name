@@ -2,24 +2,21 @@
 @import 'sideline'
 
 #watching
-	background  				#0b4957 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAPklEQVQYV2NkQAOMJg7//585wIghjiwAU4RNMVwnuiQGH2QiTuuQnMGISxHMSXDnoDsaGx+kGMN3uDQSrRAA3GUlfaDT8J4AAAAASUVORK5CYII=') repeat
-	position 					relative
-	float     					left
-	width     					60%
-	height    					100%
-	overflow 					hidden
+    position                    relative
+    float                       left
+    width                       60%
+    height                      100%
+    overflow                    hidden
 
-	&.move
-		background				#0b4957 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAALElEQVQYV2NkIBIwEqmOYaAVMpo4/P9/5gCKM9DFGGECIBrZYyCNyGJEewYAuVoRfVYO7gkAAAAASUVORK5CYII=') repeat
+    h1#row
+        color                   $white
+        position                absolute
+        font-size               500%
+        top                     0
+        width                   100%
+        height                  100%
+        opacity                 .25
+        text-align              center
 
-	h1#row
-		color 					$white
-		position 				absolute
-		font-size 				500%
-		top 					0
-		width 					100%
-		height 					100%
-		opacity 				.25
-
-		&.call
-			animation 			blow_up .5s 
+        &.call
+            animation           blow_up .5s

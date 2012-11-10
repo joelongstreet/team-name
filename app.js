@@ -11,8 +11,9 @@ ss.client.define('main', {
   tmpl: '*'
 });
 
-ss.client.define('main', {
-  view: 'app.jade',
+// Define a single-page client called 'main'
+ss.client.define('login', {
+  view: 'login.jade',
   css:  ['libs/reset.css', 'app.styl'],
   code: ['libs/jquery.min.js', 'app'],
   tmpl: '*'
@@ -33,6 +34,10 @@ ss.http.route('/', function(req, res){
     res.serveClient('remote')
   else
     res.serveClient('main');
+});
+
+ss.http.route('/login', function(req, res){
+  res.serveClient('login');
 });
 
 // Code Formatters

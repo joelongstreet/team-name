@@ -2,16 +2,24 @@
 @import 'animation'
 @import 'globals'
 
+@import 'login'
+
 @import 'watch'
 @import 'overview'
 
 body, html
   height 100%
 
- h1, h2, h3, h4, h5, h6, span, div
+h1, h2, h3, h4, h5, h6, span, div, input
   font-family 	'Silkscreen'
 
 body
   font normal 1em sans-serif
-  background linear-gradient(top, #eee, #fff)
-  text-align center
+  background $blue url($water) repeat
+
+body.wave
+  background $blue url($water2) repeat
+
+input
+  font-size 150%
+  padding 10px
