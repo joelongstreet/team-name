@@ -1,10 +1,14 @@
-exports.actions = (req, res, ss) ->
-  req.use('session')
+team = require '../core/team'
+Race = require '../core/race'
 
-  req.use('debug', 'cyan');
-  
-  broDown: (message) ->
-    console.log 'bro down!'
-    
-  rowBro: (message) ->
-    console.log message
+race = new Race()
+
+race.addTeam team
+
+exports.actions = (req, res, ss) ->
+	race.ss = ss
+	broDown: (message) ->
+		console.log 'bro down!'
+
+	rowBro: (message) ->
+		team.row 'joe'

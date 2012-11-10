@@ -1,27 +1,80 @@
 extends layout
 
 block content
+    
+    #watching
 
-    .boat.four
-        .head
-            h1 The Farts
-            .block
-            .block
-            .block
-        .people
-            .person
-                .ore
-                    .handle
-                    .paddle
-            .person
-                .ore
-                    .handle
-                    .paddle
-            .person
-                .ore
-                    .handle
-                    .paddle
-            .person
-                .ore
-                    .handle
-                    .paddle
+        #sideline
+            .trees
+
+        h1#row.none ROW
+
+        .boat.four
+
+            .head
+                h2 Team.Name
+                .block
+                .block
+                .block
+
+            .people
+                .person
+                    .ore
+                        .handle
+                        .paddle
+                .person
+                    .ore
+                        .handle
+                        .paddle
+                .person
+                    .ore
+                        .handle
+                        .paddle
+                .person
+                    .ore
+                        .handle
+                        .paddle
+
+    #overview
+
+        #stats
+            h2 Stats
+            .stat
+                span.key MPH
+                span.value 23mph
+            .stat
+                span.key Distance
+                span.value 18.23 miles
+            .stat
+                span.key Maintees Destroyed
+                span.value 3
+            .stat
+                span.key Success %
+                span.value 37%
+
+        #competition
+            .markers
+                .marker
+                    .value 0
+                    .line
+                .marker
+                    .value 20%
+                    .line
+                .marker
+                    .value 40%
+                    .line
+                .marker
+                    .value 60%
+                    .line
+                .marker
+                    .value 80%
+                    .line
+                .marker
+                    .value 100%
+                    .line
+            #boats
+                .preview_boat
+                .preview_boat
+                .preview_boat
+                .preview_boat
+                .preview_boat
