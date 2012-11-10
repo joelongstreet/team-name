@@ -1,4 +1,4 @@
-#competition
+#preview
     margin                  20px
     height                  220px
     box-shadow              5px 5px 0 rgba(255,255,255,.5)
@@ -8,7 +8,7 @@
         margin-top          -20px
         position            relative
 
-        .preview_boat
+        .mini_boat
             position        absolute
             height          15px
             width           15px
@@ -16,7 +16,7 @@
             box-shadow      2px 2px 0 $orange2
 
         for iterator in 1 2 3 4 5 6
-            .preview_boat:nth-child({iterator})
+            .mini_boat:nth-child({iterator})
                 left        15%*iterator
 
     .markers

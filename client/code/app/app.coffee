@@ -1,66 +1,20 @@
-$ ->
-    $boat       = $('.boat')
-    $countdown  = $('#countdown')
-    $line       = $('#starting_line')
-    $monster    = $('#monster')
-    
-    setInterval (->
-        $('body').toggleClass 'wave'
-    ), 1250
+setInterval (->
+    $('body').toggleClass 'wave'
+), 1250
 
-    window.animate_row = ->
-        $boat.addClass 'row'
-        setTimeout (->
-            $boat.removeClass 'row'
-        ), 500
+data =
+    boats : [
+        id : '0'
+        people : ['11111', '11111', '11111', '11111']
+    ,
+        id : '1'
+        people : ['22222', '22222', '22222', '22222', '22222', '22222']
+    ,
+        id : '2'
+        people : ['33333', '33333', '33333', '33333', '33333', '33333', '33333', '33333']
+    ]
 
-    window.release_the_beast = ->
-
-        walker = setInterval (->
-            $monster.toggleClass 'walk'
-        ), 200
-
-        $monster.css 'top' : '-10%'
-
-        setTimeout (->
-            clearInterval walker
-            $monster.hide()
-            $monster.css 'top' : '100%'
-            setTimeout (->
-                $monster.show()
-            ), 5000
-        ), 5000
-
-    window.countdown = ->
-
-      setTimeout (->
-          $countdown.text 'GO'
-          setInterval (->
-              $countdown.toggleClass 'flash'
-          ), 200
-          setTimeout (->
-              $countdown.fadeOut 'fast'
-              $boat.removeClass 'start'
-              $line.addClass 'go_away'
-          ), 1500
-      ), 4000
-
-      setTimeout (->
-          $countdown.text '1'
-      ), 3000
-
-      setTimeout (->
-          $countdown.text '2'
-      ), 2000
-
-      setTimeout (->
-          $countdown.text '3'
-      ), 1000
-
-    window.show_time = ->
-        $('body').append '<div id="fireworks"></div>'
-        fireworks = new Fireworks()
-
+game = new Game(data)
 
 #populate the game list
 exports.updateSession = ->
