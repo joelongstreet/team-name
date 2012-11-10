@@ -1,5 +1,6 @@
 EventEmitter = require('events').EventEmitter
 Race = require './race'
+ss = require('socketstream').api
 
 class GameMaster extends EventEmitter
 
@@ -19,20 +20,21 @@ class GameMaster extends EventEmitter
 				@runGame pair
 				pair = []
 
-		# push out stats
 	runGame: (pair) ->
 		race = @createRace pair
 
-		#subscribe to race events
 		race.on 'progress', (progress) ->
-			@emit 'progress', race
-
+			for t in pair
+				ss.publish.channel t.id, 'progress', progress
+		
 		race.on 'end', (winner) =>
-			@emit 'end', race, winner
-
+			for t in pair
+				ss.publish.channel t.id, 'end', winner
+		
 		race.start()
 
-		@emit 'start', race
+		for t in pair
+			ss.publish.channel t.id, 'start', pair
 		
 	findTeam: (id) ->
 		for t in @teams
