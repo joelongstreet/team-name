@@ -11,9 +11,20 @@ ss.client.define('main', {
   tmpl: '*'
 });
 
+// Define a single-page client called 'remote'
+ss.client.define('remote', {
+  view: 'remote.jade',
+  css:  ['libs/reset.css', 'app.styl'],
+  code: ['libs/jquery.min.js', 'app'],
+  tmpl: ['common', 'remote']
+});
+
 // Serve this client on the root URL
 ss.http.route('/', function(req, res){
-  res.serveClient('main');
+  if (req.headers['user-agent'].match(/iPhone/))
+    res.serveClient('remote');
+  else
+    res.serveClient('main');
 });
 
 // Code Formatters
