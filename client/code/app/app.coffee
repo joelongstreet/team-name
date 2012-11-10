@@ -6,12 +6,18 @@ $ ->
     $('body#login .start').click ->
         $('.modal').addClass('show')
     
+    # submit create game on click
     $('.create_game .btn').click ->
         ss.rpc 'team.join', null, (err, res)->
             console.log("create team", arguments)
             exports.list_teams()
         return false
-      
+    
+    # submit on enter
+    $('.login input').keyup (e)->
+        if e.which == 13 then $('.login .btn').trigger("click")
+    
+    # submit on click    
     $('.login .btn').click ->
         id = $(this).siblings('input').val();
         
