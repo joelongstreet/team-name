@@ -1,42 +1,52 @@
 class window.Game
 
-    constructor : (data) ->
+    constructor : (boats) ->
 
-        $countdown  = $('#countdown')
-        $line       = $('#starting_line')
-        boats       = []
+        #ss.event.on 'start', (boats) ->
 
-        #ss.event.on 'start', (data) ->
-
-        for boat in data.boats
-            boats.push boat
+        for boat in boats
             miniView = new MiniBoat(boat)
+
+        # the default selected boat is the first
+        @da_boat = new Boat(boats[0])
+        @da_boat.render()
+        @da_boat.$view.addClass 'start'
+
+        ss.event.on 'surge', (surge_data) =>
+            if surge_data.id == @da_boat.id
+                @da_boat.move_forward()
+                @move_forward()
+
+        @countdown()
 
 
     countdown : ->
 
-        setTimeout (->
+        $countdown  = $('#countdown')
+        $line       = $('#starting_line')
+
+        setTimeout (=>
             $countdown.text 'GO'
 
-            setInterval (->
+            setInterval (=>
                 $countdown.toggleClass 'flash'
             ), 200
 
-            setTimeout (->
+            setTimeout (=>
                 $countdown.fadeOut 'fast'
-                $boat.removeClass 'start'
+                @da_boat.$view.removeClass 'start'
                 $line.addClass 'go_away'
             ), 1500
         ), 4000
 
-        setTimeout (->
+        setTimeout (=>
             $countdown.text '1'
         ), 3000
 
-        setTimeout (->
+        setTimeout (=>
             $countdown.text '2'
         ), 2000
 
-        setTimeout (->
+        setTimeout (=>
             $countdown.text '3'
         ), 1000
