@@ -17,12 +17,31 @@ $ ->
   $boat       = $('.boat')
   $countdown  = $('#countdown')
   $line       = $('#starting_line')
+  $monster    = $('#monster')
 
   window.animate_row = ->
     $boat.addClass 'row'
     setTimeout (->
       $boat.removeClass 'row'
     ), 500
+
+  window.release_the_beast = ->
+
+      walker = setInterval (->
+        $monster.toggleClass 'walk'
+      ), 200
+
+      $monster.css 'top' : '-10%'
+
+      setTimeout (->
+        clearInterval walker
+        $monster.hide()
+        $monster.css 'top' : '100%'
+        setTimeout (->
+          $monster.show()
+        ), 5000
+      ), 5000
+
 
   window.countdown = ->
 
