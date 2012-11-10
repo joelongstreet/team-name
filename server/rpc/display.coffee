@@ -8,7 +8,10 @@ exports.actions = (req, res, ss) ->
 
   # Uncomment line below to use the middleware defined in server/middleware/example
   #req.use('example.authenticated')
-
+  
+  #output all incoming requests
+  req.use('debug', 'blue');
+  
   sendMessage: (message) ->
     if message && message.length > 0            # Check for blank messages
       ss.publish.all('newMessage', message)     # Broadcast the message to everyone
