@@ -1,40 +1,41 @@
-teams = []
+gameMaster = require '../core/gamemaster'
+Team = require '../core/team'
 
 exports.actions = (req, res, ss) ->
-
+    console.log ss
     # Example of pre-loading sessions into req.session using internal middleware
     req.use 'session'
     req.use 'randomizer.str'
     
+
     ###
     id = team_id to join
-    type = type of join (player, viewer)
     ###
     join: (id) ->
-        if id isnt undefined
-            found = false
-            for i in teams
-                if i is id
-                    req.session.channel.subscribe("#{id}")
-            res "joinTeam", id
+    
+        if typeof id is 'undefined'
+            team = new Team(req.randomizer.getString(5))
+            
+            team.on 'surge', () ->
+                ss.publish.channel(team.id, 'surge')
+
+            gameMaster.addTeam team
         else
-            new_team = req.randomizer.getString(5)
-            teams.push new_team
-            req.session.team = new_team
-            req.session.save ->
-                req.session.channel.subscribe(new_team)
-                res "team.create", new_team
-    
-    create: () ->
-        new_team = req.randomizer.getString(5)
-        teams.push new_team
-        req.session.team = new_team
-        req.session.save ->
-            req.session.channel.subscribe(new_team)
-            res("team.create", new_team)
-    
+            team = gameMaster.findTeam id 
+            unless team 
+                res "notFound", id
+                return
+        
+        unless team.addPerson req.session.clientId
+            res "full", id
+            return
+
+        req.session.channel.subscribe("#{team.id}")
+        req.session.team = team
+        res null, team.id
+        
     list: ()->
-        res "team.list", teams
+        res "team.list", gameMaster.teams
         
     leave: (id)->
         req.session.channel.unsubscribe(id)
