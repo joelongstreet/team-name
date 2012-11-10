@@ -9,13 +9,8 @@ class window.MiniBoat
         @$preview.append @$view
 
         @$view.click =>
-            current_boat    = $('#watching').find('.boat')
-            new_boat        = new Boat(data.people)
+            new_boat        = new Boat(data)
+            new_boat.render()
 
-            if current_boat.length
-                current_boat.addClass 'hide'
-                setTimeout (=>
-                    current_boat.remove()
-                ), 500
 
-            $('#watching').append new_boat.render()
+    update_position : (data) ->

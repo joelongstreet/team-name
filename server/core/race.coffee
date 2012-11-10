@@ -8,13 +8,20 @@ class Race extends EventEmitter
 
     start: () ->
         for t in @teams
-            t.on 'surge', () ->
-                # get this back to client
-                # set new position who's now winning?
-        winningCondition = false
-        #analyze where the teams are and if there's a winnning condition we emit end
-        if winningCondition
-            @emit 'end'
+            t.on 'surge', () =>
+                @analyzeTeam t
+
+    analyzeTeam: (team) ->
+        team.surge ||= 0
+        team.surge++
+
+        @emit 'surge', 
+            team: team
+            progress: team.surge
+
+        if team.surge >= 100
+            @emit 'end', team 
+            t.disband() for t in @teams
 
     addTeam: (team) ->
         console.log 'added team'
