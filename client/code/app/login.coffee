@@ -1,8 +1,14 @@
 window.me = null
 
 $ ->
+    
+    #=== "remote" login screen
+    
     $('body#login .start').click ->
         $('.modal').addClass('show')
+    
+    
+    #=== "screen" login screen
     
     # submit create game on click
     $('.create_game .btn').click ->
@@ -18,16 +24,14 @@ $ ->
     # submit on click    
     $('.login .btn').click ->
         id = $(this).siblings('input').val();
-        
         ss.rpc 'team.join', id, (err, res)->
             if err
                 throw(err)
             else
                 exports.subscribeToTeam(id)
     
-    #populate the game list
+    #populate my local session object
     ss.rpc 'system.getSession', (res)->
-        #if err then throw err
         window.me = res
         exports.list_teams()
 
@@ -49,7 +53,6 @@ exports.list_teams = ()->
         $('.current_games').html(html)
   
 exports.subscribe_team = (id)->
-    
     ss.server.on 'surge', ->
         console.log 'surge', arguments
     ss.server.on 'end', ->
