@@ -1,27 +1,34 @@
-class Team
+EventEmitter = require('events').EventEmitter
+
+class Team > EventEmitter
     
     constructor: () ->
         @periods = []
         @period = 0
         @personCount = 1
         @setRowInterval 1
-
+        @trackCount = 10
+    
     setRowInterval: (interval) ->
         @interval = interval
+        newInterval = 1000 * @interval
+
         setInterval () =>
             @evaluateRows()
-            @startNewPeriod(++@period % 10)
-        , 1000 * @interval
+            @startNewPeriod(++@period % @trackCount)
+            @emit 'coach', @interval
+        , newInterval 
 
-        console.log "changed interval to #{@interval}"
-    
+        console.log "changed interval to #{newInterval}"
+        @emit 'interval', newInterval
+        
     startNewPeriod: (position) ->
         @periods[position] = 
             people: {}
             success: false
 
     getCurrentPeriod: () ->
-        @periods[@period % 10] ||= {}
+        @periods[@period % @trackCount] ||= {}
         
     evaluateRows: () ->
         current = @getCurrentPeriod()
@@ -36,6 +43,7 @@ class Team
 
         if rowPercentage > .8
             current.success = true
+            @emit 'row', @period 
 
         @evaluateOverallPerformance()
 
