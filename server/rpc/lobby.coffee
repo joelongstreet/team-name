@@ -10,11 +10,13 @@ exports.actions = (req, res, ss) ->
   # Uncomment line below to use the middleware defined in server/middleware/example
   #req.use('example.authenticated')
 
-  listTeams: (message) ->
-    res("listTeams",true)
-  listGames: ()->
-    res("listGames",true)
-  joinTeam: ()->
+  listChannels: () ->
+    res("listChannels", req.session.channel.list())
+  joinTeam: (id)->
+    req.session.channel.subscribe(id)
     res("joinTeam",true)
-  joinGame: ()->
+  leaveTeam: (id)->
+    req.session.channel.unsubscribe(id)
+    res("joinTeam",true)
+  joinGame: (id)->
     res("joinGames",true)
