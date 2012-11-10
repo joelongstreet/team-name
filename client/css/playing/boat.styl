@@ -1,7 +1,8 @@
 .boat
-    margin                  100px auto
+    top                     40%
+    margin                  auto
     width                   30%
-    background              $orange url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQIW2N8NdHlv1j+HkYGIICxwRxkARCbESQLYsBUgwVhKpFprIIABMcQBuC/YqIAAAAASUVORK5CYII=') repeat
+    background              $orange url($boat) repeat
     box-shadow              6px 6px 0 $orange2
     position                relative
     transition              .5s all ease-out
@@ -19,8 +20,11 @@
             &:nth-child(2)
                 margin-left 55px
 
+    &.start
+        top                 70%
+
     &.row
-        margin-top          0px
+        top                 10%
 
     &.two
         height              40%

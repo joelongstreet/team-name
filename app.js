@@ -35,7 +35,7 @@ ss.client.define('remote', {
 });
 
 // Serve this client on the root URL
-/*
+
 ss.http.route('/', function(req, res){
   ua = req.headers['user-agent']
   if ( /mobile/i.test(ua) )
@@ -43,7 +43,6 @@ ss.http.route('/', function(req, res){
   else
     res.serveClient('main');
 });
-*/
 
 ss.http.route('/login', function(req, res){
   res.serveClient('login');
