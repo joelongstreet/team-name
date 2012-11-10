@@ -15,10 +15,6 @@ exports.actions = (req, res, ss) ->
     
         if typeof id is 'undefined'
             team = new Team(req.randomizer.getString(5))
-            
-            team.on 'surge', () ->
-                ss.publish.channel(team.id, 'surge')
-
             gameMaster.addTeam team
         else
             team = gameMaster.findTeam id 

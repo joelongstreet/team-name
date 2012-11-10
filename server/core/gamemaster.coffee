@@ -9,21 +9,31 @@ class GameMaster extends EventEmitter
 		, 3000
 
 	pairUpTeams: () ->
-		console.log 'pairing teams'
 		pair = []
 
 		for t in @teams
 			pair.push t if t.isFull()
 			if pair.length == 2
+				@emit 'pair', pair
 				@removeTeam	pair
-				race = @createRace pair
-				@emit 'start', race
-				race.start()
-				race.on 'end', () =>
-					@addTeam pair
-					@emit 'end', race
+				@runGame pair
 				pair = []
-	
+
+		# push out stats
+	runGame: (pair) ->
+		race = @createRace pair
+
+		#subscribe to race events
+		race.on 'progress', (progress) ->
+			@emit 'progress', race
+
+		race.on 'end', (winner) =>
+			@emit 'end', race, winner
+
+		race.start()
+
+		@emit 'start', race
+		
 	findTeam: (id) ->
 		for t in @teams
 			return t if t.id is id
