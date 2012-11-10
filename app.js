@@ -25,7 +25,7 @@ ss.http.route('/', function(req, res){
   if ( /mobile/i.test(ua) )
     res.serveClient('remote')
   else
-    res.serveClient('main');
+    res.serveClient('remote');
 });
 
 // Code Formatters
