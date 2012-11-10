@@ -3,7 +3,6 @@
 var http = require('http'),
     ss = require('socketstream');
 
-// Define a single-page client called 'main'
 ss.client.define('main', {
   view: 'app.jade',
   css:  ['libs/reset.css', 'app.styl'],
@@ -11,7 +10,6 @@ ss.client.define('main', {
   tmpl: '*'
 });
 
-// Define a single-page client called 'main'
 ss.client.define('login', {
   view: 'desktop_login.jade',
   css:  ['libs/reset.css', 'app.styl'],
@@ -26,7 +24,6 @@ ss.client.define('mobile_login', {
   tmpl: '*'
 });
 
-// Define a single-page client called 'remote'
 ss.client.define('remote', {
   view: 'remote.jade',
   css:  ['libs/reset.css', 'app.styl'],
