@@ -45,3 +45,7 @@ server.listen(3000);
 
 // Start SocketStream
 ss.start(server);
+
+// Start ss-console
+var ssconsole = require('ss-console')(ss);
+consoleServer.listen(5000);
