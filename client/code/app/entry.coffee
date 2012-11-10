@@ -15,8 +15,12 @@ ss.server.on 'ready', ->
   $ ->
     
     # Load app
-    require('/app')
-    require('/game')
-    require('/fireworks')
+    require('/game/index')
+    require('/game/fireworks')
+    require('/game/boat')
+    require('/game/miniBoat')
+
     require('/login')
     require('/remote')
+    
+    require('/app')

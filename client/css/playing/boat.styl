@@ -7,7 +7,9 @@
     position                relative
     transition              .5s all ease-out
     padding                 15px
+    opacity                 0
 
+    //reminder - place head directly in ass
     .head, .ass
         position            absolute
         top                 -110px
@@ -47,13 +49,20 @@
     &.row
         top                 10%
 
+    &.hide
+        top                 -100%
+        opacity             0
+
+    &.show
+        opacity             1
+
     &.two
         height              40%
         .person
             top             50%
 
     &.four
-        height              300px
+        height              250px
         for row in 1 2 3 4
             .person:nth-child({row})
                 if row%2 == 0
@@ -62,6 +71,7 @@
                     top     25%*row
 
     &.six
+        height              300px
         for row in 1 2 3 4 5 6
             .person:nth-child({row})
                 if row%2 == 0
@@ -70,6 +80,7 @@
                     top     16%*row
 
     &.eight
+        height              350px
         for row in 1 2 3 4 5 6 7 8
             .person:nth-child({row})
                 if row%2 == 0
