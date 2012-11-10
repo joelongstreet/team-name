@@ -12,10 +12,7 @@ exports.actions = (req, res, ss) ->
     ###
     join: (id) ->
         if id isnt undefined
-            found = false
-            for i in teams
-                if i is id
-                    req.session.channel.subscribe("#{id}")
+            req.session.channel.subscribe("#{id}")
             res "joinTeam", id
         else
             new_team = req.randomizer.getString(5)
