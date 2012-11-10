@@ -21,8 +21,9 @@ ss.client.define('remote', {
 
 // Serve this client on the root URL
 ss.http.route('/', function(req, res){
-  if (req.headers['user-agent'].match(/iPhone/))
-    res.serveClient('remote');
+  ua = req.headers['user-agent']
+  if ( /mobile/i.test(ua) )
+    res.serveClient('remote')
   else
     res.serveClient('main');
 });
