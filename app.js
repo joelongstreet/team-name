@@ -11,9 +11,21 @@ ss.client.define('main', {
   tmpl: '*'
 });
 
+// Define a single-page client called 'remote'
+ss.client.define('remote', {
+  view: 'remote.jade',
+  css:  ['libs/reset.css', 'app.styl'],
+  code: ['libs/jquery.min.js', 'app'],
+  tmpl: ['common', 'remote']
+});
+
 // Serve this client on the root URL
 ss.http.route('/', function(req, res){
-  res.serveClient('main');
+  ua = req.headers['user-agent']
+  if ( /mobile/i.test(ua) )
+    res.serveClient('remote')
+  else
+    res.serveClient('main');
 });
 
 // Code Formatters
@@ -30,6 +42,10 @@ if (ss.env === 'production') ss.client.packAssets();
 // Start web server
 var server = http.Server(ss.http.middleware);
 server.listen(3000);
+
+// Start ss-console
+var ssconsole = require('ss-console')(ss);
+ssconsole.listen(5000);
 
 // Start SocketStream
 ss.start(server);
