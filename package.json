@@ -4,11 +4,14 @@
   "version": "0.0.1",
   "author": "team-name <me@mydomain.com>",
   "private": true,
-  "engines": { "node": ">= 0.8.14" },
+  "engines": {
+    "node": ">= 0.8.14"
+  },
   "dependencies": {
     "socketstream": "0.3.x",
     "ss-coffee": "0.1.x",
     "ss-stylus": "0.1.x",
-    "ss-hogan": "0.1.x"
+    "ss-hogan": "0.1.x",
+    "ss-jade": "~0.1.3"
   }
 }
