@@ -1,109 +1,109 @@
 .boat
-	margin 					100px auto
-	width 					30%
-	background				$orange url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQIW2N8NdHlv1j+HkYGIICxwRxkARCbESQLYsBUgwVhKpFprIIABMcQBuC/YqIAAAAASUVORK5CYII=') repeat
-	box-shadow 				6px 6px 0 $orange2
-	position				relative
-	transition 				.5s all ease-out
+    margin                  100px auto
+    width                   30%
+    background              $orange url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQIW2N8NdHlv1j+HkYGIICxwRxkARCbESQLYsBUgwVhKpFprIIABMcQBuC/YqIAAAAASUVORK5CYII=') repeat
+    box-shadow              6px 6px 0 $orange2
+    position                relative
+    transition              .5s all ease-out
 
-	.head
-		h2
-			padding 	 	10px 0
-		.block
-			float 			left
-			width 			15px
-			height 			15px
-			margin-right 	15px
-			background 		$red url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2NkwAIYsQoeMLX/D5NwOH0QrAi7SmzaAd4IBAZXkxVSAAAAAElFTkSuQmCC') repeat
-			box-shadow 		2px 2px 0 $red2
-			&:nth-child(2)
-				margin-left 55px
+    .head
+        h2
+            padding         10px 0
+        .block
+            float           left
+            width           15px
+            height          15px
+            margin-right    15px
+            background      $red url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2NkwAIYsQoeMLX/D5NwOH0QrAi7SmzaAd4IBAZXkxVSAAAAAElFTkSuQmCC') repeat
+            box-shadow      2px 2px 0 $red2
+            &:nth-child(2)
+                margin-left 55px
 
-	&.row
-		margin-top 			0px
+    &.row
+        margin-top          0px
 
-	&.two
-		height				40%
-		.person
-			top 			50%
+    &.two
+        height              40%
+        .person
+            top             50%
 
-	&.four
-		height 				50%
-		for row in 1 2 3 4
-			.person:nth-child({row})
-				if row%2 == 0
-					top		25%*(row - 1)
-				else
-					top 	25%*row
+    &.four
+        height              50%
+        for row in 1 2 3 4
+            .person:nth-child({row})
+                if row%2 == 0
+                    top     25%*(row - 1)
+                else
+                    top     25%*row
 
-	&.six
-		for row in 1 2 3 4 5 6
-			.person:nth-child({row})
-				if row%2 == 0
-					top		16%*(row - 1)
-				else
-					top 	16%*row
+    &.six
+        for row in 1 2 3 4 5 6
+            .person:nth-child({row})
+                if row%2 == 0
+                    top     16%*(row - 1)
+                else
+                    top     16%*row
 
-	&.eight
-		for row in 1 2 3 4 5 6 7 8
-			.person:nth-child({row})
-				if row%2 == 0
-					top		12%*(row - 1)
-				else
-					top 	12%*row
+    &.eight
+        for row in 1 2 3 4 5 6 7 8
+            .person:nth-child({row})
+                if row%2 == 0
+                    top     12%*(row - 1)
+                else
+                    top     12%*row
 
-	.person
-		position 			absolute
-		background 			$white url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAJ0lEQVQIW2P8DwSMQMAABDA2mIMsAGIzgmTBDCDAUAnTAVaAzIGxAd+PFAbCvk4QAAAAAElFTkSuQmCC') repeat
-		border 				2px solid $white2
-		width 				40px
-		height 				40px
-		left 				10%
-		transition 			.5s all ease-out
+    .person
+        position            absolute
+        background          $white url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAJ0lEQVQIW2P8DwSMQMAABDA2mIMsAGIzgmTBDCDAUAnTAVaAzIGxAd+PFAbCvk4QAAAAAElFTkSuQmCC') repeat
+        border              2px solid $white2
+        width               40px
+        height              40px
+        left                10%
+        transition          .5s all ease-out
 
-		.full
-			background-color $grey
-			width			90%
-			height			90%
+        .full
+            background-color $grey
+            width           90%
+            height          90%
 
-		&.sweat
-			background-color $red
+        &.sweat
+            background-color $red
 
-		.ore
-			position			relative
-			left 				-85px
-			top 				17px
+        .ore
+            position            relative
+            left                -85px
+            top                 17px
 
-			&.row
-				animation       row_ore 1.5s
+            &.row
+                animation       row_ore 1.5s
 
-			&.lose
-				animation       lose_ore 1.5s
+            &.lose
+                animation       lose_ore 1.5s
 
-			.handle
-				position		absolute
-				width			75px
-				height 			6px
-				background 		$red url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2NkwAIYsQoeMLX/D5NwOH0QrAi7SmzaAd4IBAZXkxVSAAAAAElFTkSuQmCC') repeat
-				box-shadow 		2px 2px 0 $red2
-			.paddle
-				position		absolute
-				margin-left 	-35px
-				margin-top		-10px
-				width 			45px
-				height 			25px
-				background 		$red url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2NkwAIYsQoeMLX/D5NwOH0QrAi7SmzaAd4IBAZXkxVSAAAAAElFTkSuQmCC') repeat
-				box-shadow 		2px 2px 0 $red2
+            .handle
+                position        absolute
+                width           75px
+                height          6px
+                background      $red url($red_pattern) repeat
+                box-shadow      2px 2px 0 $red2
+            .paddle
+                position        absolute
+                margin-left     -35px
+                margin-top      -10px
+                width           45px
+                height          25px
+                background      $red url($red_pattern) repeat
+                box-shadow      2px 2px 0 $red2
 
-		&:nth-child(even)
-			left 				auto
-			right				10%
+        &:nth-child(even)
+            left                auto
+            right               10%
 
-			.ore
-				left 			auto
-				right 			-45px
-				.paddle
-					margin-left 0
-					margin-right -75px
-					left 		auto
-					right 		0
+            .ore
+                left            auto
+                right           -45px
+                .paddle
+                    margin-left 0
+                    margin-right -75px
+                    left        auto
+                    right       0
