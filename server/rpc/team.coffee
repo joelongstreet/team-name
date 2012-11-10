@@ -2,23 +2,21 @@ gameMaster = require '../core/gamemaster'
 Team = require '../core/team'
 
 exports.actions = (req, res, ss) ->
-    console.log ss
-    # Example of pre-loading sessions into req.session using internal middleware
+    
     req.use 'session'
     req.use 'randomizer.str'
-    
 
     ###
     id = team_id to join
     ###
     join: (id) ->
     
-        if typeof id is 'undefined'
+        if typeof id is 'undefined' or id is null
             team = new Team(req.randomizer.getString(5))
             
             team.on 'surge', () ->
-                ss.publish.channel(team.id, 'surge')
-
+                ss.publish.channel("#{team.id}", 'surge')
+            
             gameMaster.addTeam team
         else
             team = gameMaster.findTeam id 
