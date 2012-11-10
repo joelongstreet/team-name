@@ -3,11 +3,37 @@
 @import 'overview'
 
 #watching
-    position                    relative
-    float                       left
-    width                       60%
-    height                      100%
-    overflow                    hidden
+    position                relative
+    float                   left
+    width                   60%
+    height                  100%
+    overflow                hidden
+
+#starting_line
+    background              url($checks) repeat
+    height                  20px
+    position                absolute
+    width                   100%
+    top                     80%
+    transition              .5s all
+
+    &.go_away
+        top                 120%
+
+#countdown
+    top                     30%
+    width                   100%
+    color                   $white
+    margin                  auto
+    position                absolute
+    font-size               900%
+    text-align              center
+    transition              .05s all
+    text-shadow             5px 5px 0 $red
+
+    &.flash
+        color               $red
+        font-size           1500%
 
 h1#row
     color                   $white

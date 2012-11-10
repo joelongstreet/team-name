@@ -1,5 +1,6 @@
 EventEmitter = require('events').EventEmitter
 Race = require './race'
+ss = require('socketstream').api
 
 class GameMaster extends EventEmitter
 
@@ -9,20 +10,38 @@ class GameMaster extends EventEmitter
 		, 3000
 
 	pairUpTeams: () ->
-		console.log 'pairing teams'
 		pair = []
 
 		for t in @teams
 			pair.push t if t.isFull()
 			if pair.length == 2
+				@emit 'pair', pair
 				@removeTeam	pair
-				race = @createRace pair
-				@emit 'start', race
-				race.start()
-				race.on 'end', () =>
-					@addTeam pair
+				@runGame pair
 				pair = []
-	
+
+	runGame: (pair) ->
+		race = @createRace pair
+
+		race.on 'progress', (progress) ->
+			for t in pair
+				ss.publish.channel t.id, 'progress', 
+					id: t.id,
+					progress: progress
+		
+		race.on 'end', (winner) =>
+			for t in pair
+				ss.publish.channel t.id, 'end', 					
+					id: t.id,
+					winner: winner
+		
+		race.start()
+
+		for t in pair
+			ss.publish.channel t.id, 'start', 
+				id: t.id,
+				teams: pair
+		
 	findTeam: (id) ->
 		for t in @teams
 			return t if t.id is id

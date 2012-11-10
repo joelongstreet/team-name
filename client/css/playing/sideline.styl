@@ -1,20 +1,24 @@
 #sideline
+    position                relative
     background              url($dirt) repeat
     height                  100%
     width                   15%
     float                   left
-
-    h2
-        font-size           300%
-        color               $white
-        opacity             .2
-        width               200%
-        margin-top          200%
-        margin-left         -22%
-        float               left
-        transform           rotateZ(-90deg)
+    border-right            2px solid $white
 
     .trees
         background          url($trees) repeat
         width               90%
         height              100%
+
+    #monster
+        top                 100%
+        left                10%
+        position            absolute
+        background-color    red
+        width               20px
+        height              20px
+        transition          5s top linear
+
+        &.walk
+            border          5px solid yellow
