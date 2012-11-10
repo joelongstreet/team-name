@@ -47,12 +47,13 @@ exports.list_teams = ()->
             return
             
         for pair in res
-            console.log(pair)
+            console.log "pair", pair
             html += ss.tmpl['login-gamelist'].render(pair)
             
-        $('.current_games').html(html)
+        $('.current_games').html( html )
   
 exports.subscribe_team = (id)->
+    
     ss.server.on 'surge', ->
         console.log 'surge', arguments
     ss.server.on 'end', ->
