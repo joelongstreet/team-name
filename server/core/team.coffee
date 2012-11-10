@@ -65,7 +65,7 @@ class Team extends EventEmitter
             @setRowInterval .1
 
     row: (person) ->
-        currentPeriod = @getcurrentPeriodPeriod()
+        currentPeriod = @getCurrentPeriod()
         currentPeriod.people[person] = 0 unless currentPeriod.people[person]
         currentPeriod.people[person]++
     
