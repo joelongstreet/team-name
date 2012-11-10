@@ -30,7 +30,7 @@ exports.actions = (req, res, ss) ->
             res "full", id
             return
 
-        req.session.channel.subscribe("#{team.id}")
+        req.session.channel.subscribe(team.id)
         req.session.team = team
         res null, team.id
         

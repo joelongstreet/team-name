@@ -21,6 +21,7 @@ class GameMaster extends EventEmitter
 				race.start()
 				race.on 'end', () =>
 					@addTeam pair
+					@emit 'end', race
 				pair = []
 	
 	findTeam: (id) ->
