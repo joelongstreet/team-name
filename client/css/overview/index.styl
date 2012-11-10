@@ -1,0 +1,77 @@
+#overview
+	float 					right
+	height 					100%
+	width 					40%
+	overflow 				hidden
+	background 				url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAO0lEQVQYV2P00hP9zwAEDsrcIIrhwN2vYBqdz0i0wq5ABbCJuEyCmcxItEKirSZaIdFWE62QaKuJVQgAji1NO0/1Ts0AAAAASUVORK5CYII=') repeat
+	box-shadow 				-2px 0 0 $white
+
+	#stats
+		margin 				20px 20px 100px 20px
+		text-align 			left
+		font-size 			130%
+		h2
+			margin-bottom 	25px
+			padding 		10px
+			background-color $white
+			text-align 		center			
+			font-size 		300%
+			text-shadow 	5px 5px 0px white
+			box-shadow		5px 5px 0 rgba(255,255,255,.5)
+		.stat
+			box-shadow		5px 5px 0 rgba(255,255,255,.5)
+			background-color $white
+			padding 		5px 10px
+			margin-bottom 	10px
+		.key
+			display 		inline-block
+			font-weight 	bold
+			width 			40%
+		.value
+			font-style 		italic
+
+	#competition
+		margin 				20px
+		height 				220px
+		box-shadow			5px 5px 0 rgba(255,255,255,.5)
+
+		#boats
+			margin-left 	10px
+			margin-top 		-20px
+			position		relative
+
+			.preview_boat
+				position		absolute
+				height 			15px
+				width 			15px
+				background 		$red url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2NkwAIYsQoeMLX/D5NwOH0QrAi7SmzaAd4IBAZXkxVSAAAAAElFTkSuQmCC') repeat
+				box-shadow 		2px 2px 0 $red2
+
+			for iterator in 1 2 3 4 5 6
+				.preview_boat:nth-child({iterator})
+					left	15%*iterator
+
+		.markers
+			height 			100%
+			padding 		10px
+			position		relative
+			background-color $white
+
+			.marker
+				width 		100%
+				position 	absolute
+
+			for iterator in 1 2 3 4 5 6
+				.marker:nth-child({iterator})
+					bottom	15%*(iterator - 1)
+
+			.line
+				float 		right
+				margin-right 10%	
+				width 		70%
+				height 		2px
+				background-color white
+
+			.value
+				font-size 	130%
+				float 		left
