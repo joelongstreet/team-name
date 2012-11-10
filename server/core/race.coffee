@@ -1,8 +1,10 @@
 EventEmitter = require('events').EventEmitter
+randomizer = require './randomizer'
 
 class Race extends EventEmitter
 
     constructor: (@teams) ->
+        @id = randomizer.getString 5
 
     start: () ->
         for t in @teams
@@ -13,7 +15,7 @@ class Race extends EventEmitter
         #analyze where the teams are and if there's a winnning condition we emit end
         if winningCondition
             @emit 'end'
-            
+
     addTeam: (team) ->
         console.log 'added team'
 
