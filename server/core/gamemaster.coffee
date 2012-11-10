@@ -24,10 +24,9 @@ class GameMaster extends EventEmitter
         race = @createRace pair
 
         race.on 'progress', (progress) ->
-            for t in pair
-                ss.publish.channel t.id, 'progress', 
-                    id: t.id,
-                    progress: progress
+            ss.publish.channel race.id, 'progress', 
+                raceId: race.id
+                progress: progress
         
         race.on 'end', (winner) =>
             @endRace race
