@@ -2,12 +2,12 @@ EventEmitter = require('events').EventEmitter
 
 class Team extends EventEmitter
 
-    constructor: () ->
+    constructor: (@id, @teamSize = 1) ->
         @periods = []
         @period = 0
-        @personCount = 1
         @setRowInterval 1
-        @trackCount = 10
+        @trackCount = 5
+        @persons = []
     
     setRowInterval: (interval) ->
         @interval = interval
@@ -39,7 +39,7 @@ class Team extends EventEmitter
             goodRows++ if v is 1
 
         #did atleast 80% of people successfuly row?
-        rowPercentage = goodRows / @personCount
+        rowPercentage = goodRows / @persons.length
 
         if rowPercentage > .8
             current.success = true
@@ -64,9 +64,19 @@ class Team extends EventEmitter
         else if @interval < .1
             @setRowInterval .1
 
-    row: (client) ->
-        current = @getCurrentPeriod()
-        current.people[client] = 0 unless current.people[client]
-        current.people[client]++
+    row: (person) ->
+        currentPeriod = @getcurrentPeriodPeriod()
+        currentPeriod.people[person] = 0 unless currentPeriod.people[person]
+        currentPeriod.people[person]++
+    
+    addPerson: (person) ->
+        full = @isFull() 
+        return false if full
+        @persons.push person
+        @emit 'full' if @isFull()  
+        return true
 
-module.exports = new Team()
+    isFull: () ->
+        @persons.length == @teamSize
+
+module.exports = Team
