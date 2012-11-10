@@ -1,0 +1,27 @@
+$dark_blue 			= #002635
+$light_blue			= #013440
+$red				= #ab1a25
+$red2				= #c0353f
+$orange 			= #d97925
+$orange2			= #ea9144
+$white 				= #efe7be
+$white2 			= #ffffff
+
+
+font_path( filename )
+  '/fonts/'+filename
+
+
+// embed_font loads your fonts faster - no muss, no fuss
+embed_font( family_name, filename ) 
+  @font-face
+    font-family: family_name
+    font-weight: normal
+    font-style: normal
+    src: url( font_path(filename+'.eot') )
+    src: local('☺'), url( font_path(filename+'.woff')) format('woff'), url(font_path(filename+'.ttf')) format('truetype'), url(font_path(filename+'.svg#'+family_name )) format('svg')
+
+// load fonts into font-namespaces
+embed_font( 'SilkscreenNormal', 'slkscre-webfont' )
+// Common font-family stacks
+$SilkScreen = "SilkscreenNormal", monospace
