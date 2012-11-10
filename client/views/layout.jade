@@ -7,6 +7,15 @@ html
 
         block head
 
-    body
+    block vars
+
+    if (typeof(bodyID) != 'undefined') && (typeof(bodyID) != 'undefined')
+        body(id='#{bodyID}', class='#{bodyClass}')
+    else if (typeof(bodyID) != 'undefined')
+        body(id='#{bodyID}')
+    else if (typeof(bodyClass) != 'undefined')
+        body(class='#{bodyClass}')
+    else
+        body
     
-        block content
+    block content

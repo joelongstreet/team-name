@@ -1,7 +1,10 @@
 $ ->
   setInterval (->
-      $('body').toggleClass 'wave'
+    $('body').toggleClass 'wave'
   ), 1250
+
+  $('body#login .start').click ->
+    $('.modal').addClass('show')
 
 ### QUICK CHAT DEMO ####
 

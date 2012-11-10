@@ -22,3 +22,18 @@ $red_pattern        = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAY
     background      $red url($red_pattern) repeat
     box-shadow      3px 3px 0 $red2
     text-decoration none
+
+.modal
+    background      $red url($red_pattern) repeat
+    position        absolute
+    top             -20%
+    width           60%
+    left            10%
+    padding         10%
+    opacity         0
+    transition      .5s all
+    font-size       130%
+
+    &.show
+        top         20%
+        opacity     1

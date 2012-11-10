@@ -1,0 +1,46 @@
+block vars
+    - var bodyID    = 'login'
+    - var bodyClass = 'desktop'
+
+extends login
+
+block main
+
+    .left
+        h2 Current Games
+
+        .current_games
+
+            .game
+                a.btn(href='#') Join
+                .name Some Game
+                .location Kansas City, MO - USA
+                .code 17532
+            .game
+                a.btn(href='#') Join
+                .name Some Game
+                .location Kansas City, MO - USA
+                .code 17532
+            .game
+                a.btn(href='#') Join
+                .name Some Game
+                .location Kansas City, MO - USA
+                .code 17532
+            .game
+                a.btn(href='#') Join
+                .name Some Game
+                .location Kansas City, MO - USA
+                .code 17532
+
+    .right
+        .explain
+            p Row Bro is about to blow YOUR FUCKING MIND. Take your mobile device and act like you're using it to jerk off to the beat of a row coach's call. 
+
+        .login
+            input(placeholder='Your 5 Digit Code')
+            a.btn(href='#') OK
+
+        .or OR
+
+        .create_game
+            a.btn(href='#') Create a Game
