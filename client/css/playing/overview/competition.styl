@@ -1,0 +1,45 @@
+#competition
+    margin                  20px
+    height                  220px
+    box-shadow              5px 5px 0 rgba(255,255,255,.5)
+
+    #boats
+        margin-left         10px
+        margin-top          -20px
+        position            relative
+
+        .preview_boat
+            position        absolute
+            height          15px
+            width           15px
+            background      $red url($red_pattern) repeat
+            box-shadow      2px 2px 0 $red2
+
+        for iterator in 1 2 3 4 5 6
+            .preview_boat:nth-child({iterator})
+                left        15%*iterator
+
+    .markers
+        height              100%
+        padding             10px
+        position            relative
+        background-color    $white
+
+        .marker
+            width           100%
+            position        absolute
+
+        for iterator in 1 2 3 4 5 6
+            .marker:nth-child({iterator})
+                bottom      15%*(iterator - 1)
+
+        .line
+            float           right
+            margin-right    10%    
+            width           70%
+            height          2px
+            background-color white
+
+        .value
+            font-size       130%
+            float           left

@@ -1,0 +1,23 @@
+@import 'boat'
+@import 'sideline'
+@import 'overview'
+
+#watching
+    position                    relative
+    float                       left
+    width                       60%
+    height                      100%
+    overflow                    hidden
+
+h1#row
+    color                   $white
+    position                absolute
+    font-size               500%
+    top                     0
+    width                   100%
+    height                  100%
+    opacity                 .25
+    text-align              center
+
+    &.call
+        animation           blow_up .5s
