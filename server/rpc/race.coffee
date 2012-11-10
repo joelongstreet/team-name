@@ -1,18 +1,17 @@
-
+races = []
 
 exports.actions = (req, res, ss) ->
 
     # Example of pre-loading sessions into req.session using internal middleware
     req.use 'session'
-
-    # use middleware defined in server/middleware/example
-    #req.use('example.authenticated')
+    req.use 'randomizer.str'
     
     #output all incoming requests
     req.use 'debug', 'orange'
     
     create: ()->
-        id = Math.rand(100)
+        id = req.randomizer.getString(5)
+        races.push id
         req.session.currentGame = id
         
     join: (id)->
@@ -21,7 +20,8 @@ exports.actions = (req, res, ss) ->
             console.log('User joined race:', req.session)
             res(req.session)
     
-            
+    list: ()->
+        res('race.list', races)
     start: () ->
         this.startTime = (new Date()).getTime();
         res(true)
