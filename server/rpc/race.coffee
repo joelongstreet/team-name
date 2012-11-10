@@ -10,14 +10,17 @@ exports.actions = (req, res, ss) ->
     
     #output all incoming requests
     req.use 'debug', 'orange'
+    
     create: ()->
         id = Math.rand(100)
         req.session.currentGame = id
+        
     join: (id)->
         req.session.currentGame = id
         req.session.save (err)->
             console.log('User joined race:', req.session)
             res(req.session)
+    
             
     start: () ->
         this.startTime = (new Date()).getTime();

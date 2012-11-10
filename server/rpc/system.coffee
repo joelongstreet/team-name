@@ -8,16 +8,16 @@ exports.actions = (req, res, ss) ->
     
     # Uncomment line below to use the middleware defined in server/middleware/example
     #req.use('example.authenticated')
-    req.use('randomizer')
+    req.use('randomizer.str')
     
     console.log(req)
     
     #output all incoming requests
     req.use('debug', 'cyan')
     
-    return {
+    obj = {
         getSession: ()->
-            console.log 'The contents of my session is', req.session
+            console.log 'WAT?', req.randomizer
             res(req.session)
         
         updateSession: ()->
@@ -53,4 +53,6 @@ exports.actions = (req, res, ss) ->
             if id is undefined
                 delete req.session[id]
     }
+    
+    return obj;
 

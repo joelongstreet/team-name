@@ -12,11 +12,4 @@ exports.actions = (req, res, ss) ->
 
   listChannels: () ->
     res("listChannels", req.session.channel.list())
-  joinTeam: (id)->
-    req.session.channel.subscribe(id)
-    res("joinTeam",true)
-  leaveTeam: (id)->
-    req.session.channel.unsubscribe(id)
-    res("joinTeam",true)
-  joinGame: (id)->
-    res("joinGames",true)
+  
