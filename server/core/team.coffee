@@ -5,11 +5,15 @@ class Team extends EventEmitter
     constructor: (@id, @teamSize = 1) ->
         @periods = []
         @period = 0
-        @setRowInterval 1
+        @interval = 1
         @trackCount = 5
         @persons = []
         @surge = 0
     
+    start: () ->
+        console.log "#{@id} started!"
+        @setRowInterval @interval
+
     setRowInterval: (interval) ->
         @interval = interval
         newInterval = 1000 * @interval
@@ -20,7 +24,6 @@ class Team extends EventEmitter
             @startNewPeriod(++@period % @trackCount)
         , newInterval 
 
-        console.log "changed interval to #{newInterval}"
         @emit 'interval', newInterval
         
     startNewPeriod: (position) ->
@@ -75,7 +78,7 @@ class Team extends EventEmitter
             @setRowInterval .1
     
     broDown: (person) ->
-        
+
     row: (person) ->
         currentPeriod = @getCurrentPeriod()
         currentPeriod.people[person.socketId] ||= 0 

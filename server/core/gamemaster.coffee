@@ -60,6 +60,7 @@ class GameMaster extends EventEmitter
         @races.push race
        
         startGame = () ->
+
             # let the match maker know we've started a new race
             ss.publish.channel 'mm', 'start', 
                 raceId: race.id
@@ -69,6 +70,10 @@ class GameMaster extends EventEmitter
             ss.publish.channel race.id, 'start', 
                 raceId: race.id
                 teams: teams
+
+            for t in teams
+                t.start()
+                
         i = 0
         # put all people in the race channel for progress updates
         for t in teams

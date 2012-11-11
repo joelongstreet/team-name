@@ -4,7 +4,7 @@ randomizer = require './randomizer'
 class Race extends EventEmitter
 
     constructor: (@teams) ->
-        @id = randomizer.getString 5
+        @id = "race-#{randomizer.getString(5)}"
 
     start: () ->
         for t in @teams

@@ -5,9 +5,6 @@ exports.actions = (req, res, ss) ->
     req.use('session')
     req.use('randomizer.str')
     
-    #output all incoming requests
-    req.use('debug', 'cyan')
-    
     obj = {
         getSession: ()->
             res(req.session)

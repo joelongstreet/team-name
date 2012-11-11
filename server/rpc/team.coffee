@@ -9,7 +9,7 @@ exports.actions = (req, res, ss) ->
     join: (id) ->
         
         if typeof id is 'undefined' or id is null
-            team = new Team(req.randomizer.getString(5))
+            team = new Team("team-#{req.randomizer.getString(5)}")
             gameMaster.addTeam team
         else
             team = gameMaster.findTeam id 
@@ -26,7 +26,7 @@ exports.actions = (req, res, ss) ->
         req.session.channel.subscribe team.id
         req.session.teamId = team.id
         res null, 
-            teamId: teamId
+            teamId: team.id
             sessionId: req.sessionId
             socketId: req.socketId
         
