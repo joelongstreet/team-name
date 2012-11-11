@@ -20,14 +20,20 @@ class window.Remote
 
         $('.start').click (e) =>
             $('.waiting').addClass('show')
+            console.log 'clicked'
 
             ss.rpc 'team.join', (err, data) =>
                 console.log data
                 @assign_team(data)
 
-
+        game_started = false
         ss.event.on 'start', (data) =>
-            @start_game(data)
+            if game_started is false
+                game_started = true
+                @start_game(data)
+                setTimeout (->
+                    game_started = false
+                ), 3000
 
         ss.event.on 'end', (winner) =>
             @end_game(winner)

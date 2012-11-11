@@ -14,8 +14,14 @@ class window.Game
         @stats = new Stats()
         @stats.render()
 
+        game_started = false
         ss.event.on 'start', (data) =>
-            @start_game(data)
+            if game_started is false
+                game_started = true
+                @start_game(data)
+                setTimeout (->
+                    game_started = false
+                ), 3000
 
         # Listen and assign events
         ss.event.on 'surge', (team, surge_data) =>

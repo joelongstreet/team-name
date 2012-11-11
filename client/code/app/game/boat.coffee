@@ -17,7 +17,7 @@ class window.Boat
         css_class = ''
         
         switch @people.length
-            when 1 then css_class = 'one'
+            when 1 then css_class = 'two'
             when 2 then css_class = 'two'
             when 4 then css_class = 'four'
             when 6 then css_class = 'six'
