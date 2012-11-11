@@ -1,10 +1,10 @@
-var Audio = function () {
-   this.audio = new Audio();
+var GameAudio = function () {
+   this.audio = new window.Audio();
    this.playing = false;
    this.src = null;
 };
 
-Audio.prototype.play = function () {
+GameAudio.prototype.play = function () {
    if (!this.playing) {
       this.playing = true;
       this.audio.src = this.src;
@@ -19,7 +19,7 @@ Audio.prototype.play = function () {
    }
 };
 
-Audio.prototype.stop = function () {
+GameAudio.prototype.stop = function () {
    if (this.playing) {
       this.audio.pause();
    }
@@ -68,7 +68,7 @@ AudioController.prototype.play = function (file) {
    }
 
    this.maxid++;
-   var audio = new Audio();
+   var audio = new GameAudio();
    audio.src = file;
    audio.play();
    this.soundCache[this.maxid] = audio;
