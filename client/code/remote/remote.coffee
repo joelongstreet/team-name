@@ -15,18 +15,21 @@ class window.Remote
             @identifier = userId
             $('span.code, .reminder').text(@identifier)
             ss.rpc 'system.sync', 'remote'
-
+        
+        $('.tapper').click (e) =>
+            @listener.didAccelerationChange = true if @listener
+        
         $('.start').click (e) =>
             $('.waiting').addClass('show')
-            console.log 'clicked'
 
             ss.rpc 'team.join', (err, data) =>
                 console.log data
                 @assign_team(data)
 
-
         game_started = false
+        
         ss.event.on 'coach', () =>
+            @listener = new RowListener() if !@listener
             game_started = true
             $('.playing').addClass('show')
 
@@ -45,17 +48,15 @@ class window.Remote
             $('.playing').css 'backgroundColor' : data.hex
 
     start_game : (data) ->
-        #my_team = data.id
         $('.waiting').show()
-        @listener = new RowListener()
         $('.waiting').hide()
         $('.playing').addClass('show')
+        @listener = new RowListener()
 
     end_game : (winner) ->
-        @listener.die()
+        @listener?.die()
         @listener = null
             
-
 class RowListener
 
     constructor : ->
@@ -70,35 +71,30 @@ class RowListener
             isHeldDown      = true;
 
         window.addEventListener 'touchend', ->
-
             if touchTimeout then return
 
-            touchTimeout = setTimeout (->
+            touchTimeout = setTimeout ->
                 isHeldDown      = false;
                 touchTimeout    = null;
-                    
                 ss.rpc 'remote.broDown'
-            ), 3000
+            , 3000
 
-        $('.playing .tapper').on 'click', onClick 
-            
         window.ondevicemotion = (e) ->
-                if didAccelerationChange then return
-                
-                if typeof lastAcceleration != 'undefined'
-                    currentSign = e.accelerationIncludingGravity.x >= 0 ? 1: 0
-                    lastSign = lastAcceleration >= 0 ? 1 : 0
+            if didAccelerationChange then return
+            
+            if typeof lastAcceleration != 'undefined'
+                currentSign = e.accelerationIncludingGravity.x >= 0 ? 1: 0
+                lastSign = lastAcceleration >= 0 ? 1 : 0
 
-                    if (currentSign != lastSign && Math.abs(e.accelerationIncludingGravity.x) > threshold)
-                        didAccelerationChange = true;
-                        lastAcceleration = undefined;
+                if (currentSign != lastSign && Math.abs(e.accelerationIncludingGravity.x) > threshold)
+                    didAccelerationChange = true;
+                    lastAcceleration = undefined;
 
-                lastAcceleration = e.accelerationIncludingGravity.x;
+            lastAcceleration = e.accelerationIncludingGravity.x;
 
         @listenerInterval = setInterval ->
             if didAccelerationChange
                 ss.rpc 'remote.rowBro'
-                audio.play '/audio/row.ogg'
 
             didAccelerationChange = false;
         , 100
@@ -106,6 +102,5 @@ class RowListener
     onClick: (e) ->
         didAccelerationChange = true
 
-    die : ->
-        $('.playing .tapper').off 'click', onClick
+    die: ->
         clearInterval @listenerInterval
