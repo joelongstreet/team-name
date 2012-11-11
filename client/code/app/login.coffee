@@ -25,30 +25,24 @@ $ ->
 
 
 # Shared Methods
-
 exports.list_teams = ()-> 
     
-    ss.rpc 'team.list', null, (err, teams) ->
+    ss.rpc 'team.list', (err, teams) ->
         console.log("team.list", teams)
         $container = $('.current_teams')
-        html = "<div>no teams</div>"
-        
-        unless teams 
-            $container.html(html)
-            return
-            
-        if teams.length < 1
-            $container.html(html)
-            return
-        
         html = ""
-        for t in teams
-            html += ss.tmpl['login-gamelist'].render(teams)
-            
+        
+        for i,team of teams
+            if teams.hasOwnProperty(i)
+                console.log(team)
+                html += ss.tmpl['login-teamlist'].render({id: i, team:team})
+        
+        if html is ""
+            html = "<div>no teams</div>"
+          
         $container.html( html )
     
-    ss.rpc 'race.list', null, (err, races) ->
-        console.log("race.list", races)
+    ss.rpc 'race.list', (err, races) ->
         $container = $('.current_races')
         html = "<div>no races</div>"
         
@@ -62,10 +56,11 @@ exports.list_teams = ()->
         
         html = ""
         for r in races
-            html += ss.tmpl['login-racelist'].render({ teams: r.teams })
-            
+            html += ss.tmpl['login-racelist'].render(races[0])
+        
         $container.html( html )
-
+        
+window.list_teams = exports.list_teams
 
 exports.subscribe_team = (id)->
     ss.server.on 'start', (data) ->
