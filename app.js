@@ -60,6 +60,11 @@ ss.client.templateEngine.use(require('ss-hogan'));
 // Minimize and pack assets if you type: SS_ENV=production node app.js
 if (ss.env === 'production') ss.client.packAssets();
 
+// we should have seen this coming...
+process.on('uncaughtException', function(e){
+  console.log('UNCAUGHT EXCEPTION!', e)
+});
+
 // Start web server
 var server = http.Server(ss.http.middleware);
 server.listen(3000);
