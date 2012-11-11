@@ -28,15 +28,7 @@ var setOrCreateUID = function(req, cb){
 
 // Define a single-page client called 'main'
 ss.client.define('main', {
-  view: 'desktop_login.jade',
-  css:  ['libs/reset.css', 'app.styl'],
-  code: ['libs/jquery.min.js', 'app'],
-  tmpl: '*'
-});
-
-// Define a single-page client called 'main'
-ss.client.define('login', {
-  view: 'desktop_login.jade',
+  view: 'login.jade',
   css:  ['libs/reset.css', 'app.styl'],
   code: ['libs/jquery.min.js', 'app'],
   tmpl: '*'
@@ -53,13 +45,11 @@ ss.client.define('remote', {
 // Serve this client on the root URL
 
 ss.http.route('/', function(req, res){
-  setOrCreateUID(req, function () { 
-    ua = req.headers['user-agent']
-    if ( /mobile/i.test(ua) )
-      res.serveClient('remote')
-    else
-      res.serveClient('main')
-  });
+  ua = req.headers['user-agent']
+  if ( /mobile/i.test(ua) )
+    res.serveClient('remote')
+  else
+    res.serveClient('main');
 });
 
 ss.http.route('/login', function(req, res){
@@ -68,10 +58,6 @@ ss.http.route('/login', function(req, res){
 
 ss.http.route('/remote', function(req, res){
   setOrCreateUID(req, function () { res.serveClient('remote') });
-});
-
-ss.http.route('/mobile-login', function(req, res){
-  setOrCreateUID(req, function () { res.serveClient('mobile_login') });
 });
 
 // Code Formatters

@@ -53,6 +53,7 @@ class window.Game
             if iterator == 5
                 clearInterval wave_flags
                 $('.boat').fadeOut('slow')
+                $('#waiting').fadeIn('slow')
                 $('#checkered_flag').fadeOut('fast')
             $('#checkered_flag').toggleClass 'wave'
 

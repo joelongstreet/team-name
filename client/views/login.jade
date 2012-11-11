@@ -1,14 +1,54 @@
+block vars
+    - var bodyID = 'login'
+
 extends layout
 
 block content
-
     header.intro
         .trees
             h1 Row Bro!
 
     section.main
-        block main
 
+        .left
+            h2 Current Races
+
+            .current_games
+
+                .game
+                    a.btn(href='#') Join
+                    .name Some Race
+                    .location Kansas City, MO - USA
+                    .code 17532
+                .game
+                    a.btn(href='#') Join
+                    .name Some Race
+                    .location Kansas City, MO - USA
+                    .code 17532
+                .game
+                    a.btn(href='#') Join
+                    .name Some Race
+                    .location Kansas City, MO - USA
+                    .code 17532
+                .game
+                    a.btn(href='#') Join
+                    .name Some Race
+                    .location Kansas City, MO - USA
+                    .code 17532
+
+        .right
+            .explain
+                p Row Bro is about to blow YOUR FUCKING MIND. Take your mobile device and act like you're using it to jerk off to the beat of a row coach's call.
+                p Join a team (with a five digit code)
+
+            .login
+                input(placeholder='Your 5 Digit Code', maxlength="5", minlength="5")
+                a.btn(href='#') OK
+
+            .or OR
+
+            a.btn#create_game(href='#') Create a Team
+            
     footer
         .trees
             p 

@@ -7,35 +7,37 @@ class window.Remote
             $('span.code').text(@identifier)
             ss.rpc 'system.sync', 'remote'
 
+
         $('.start').click (e) =>
-
-            e.preventDefault()
-
             $('.waiting').addClass('show')
 
-            ss.rpc 'team.join', (err, data) ->
-                if err then alert err
-                else
-                    if data.color
-                        $('.playing').find('.color').text data.color
-                        $('.playing').css 'backgroundColor' : data.hex
-                    $('.waiting').find('h3').text data.sessionId
-                    $('.waiting').show()
+            ss.rpc 'team.join', (err, data) =>
+                @assign_team(data)
 
-        ss.event.on 'start', (data) ->
-            console.log 'server start'
-            console.log data
-            my_team = data.id
-            @listener = new RowListener()
-            $('.waiting').hide()
-            $('.playing').addClass('show')
 
-        ss.event.on 'end', (winner) ->
+        ss.event.on 'start', (data) =>
+            @start_game(data)
+
+
+        ss.event.on 'end', (winner) =>
             @end_game(winner)
 
+
+    assign_team : (data) ->
+        if data.color
+            $('.playing').find('.color').text data.color
+            $('.playing').css 'backgroundColor' : data.hex
+
+    start_game : (data) ->
+        #my_team = data.id
+        $('.waiting').show()
+        @listener = new RowListener()
+        $('.waiting').hide()
+        $('.playing').addClass('show')
+
     end_game : (winner) ->
-        @listener.die()
-        @listener = null
+        #@listener.die()
+        #@listener = null
             
 
 class RowListener

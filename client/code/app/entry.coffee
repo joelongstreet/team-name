@@ -21,6 +21,5 @@ ss.server.on 'ready', ->
     require('/game/stats')
 
     require('/login')
-    require('/remote')
     
     require('/app')

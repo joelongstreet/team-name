@@ -1,4 +1,4 @@
-body#login.mobile
+body#remote
 
     h1
         font-size   300% !important
@@ -27,16 +27,20 @@ body#login.mobile
     .btn
         font-size   250%
 
-    .playing
-        top         0
-        left        0
-        display     none
-        width       100%
-        height      100%
-        text-align  center
-        font-size   150%
-        padding-top 50px
-        background      $red url($red_pattern) repeat
+    .playing, .waiting
+        display         none
         position        absolute
+        top             -20%
+        left            0%
+        opacity         0
+        width           80%
+        height          80%
+        padding         10%
+        background      $red url($red_pattern) repeat
+        transition      .5s all
+        font-size       130%
+
         &.show
-            display block
+            display     block
+            top         0%
+            opacity     1

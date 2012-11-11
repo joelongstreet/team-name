@@ -1,19 +1,22 @@
 block vars
-    - var bodyID    = 'login'
-    - var bodyClass = 'mobile'
+    - var bodyID = 'remote'
 
-extends login
+extends layout
 
-block main
+block content
+    header.intro
+        .trees
+            h1 Row Bro!
 
-    h2 Your Room Code is
-        span.code Generating...
+    section.main
 
-    a.btn.start(href='#') Start
+        h2 Your Room Code is
+            span.code Generating...
 
-    .waiting.modal
-        p Waiting for game to start
-        //h3 x
-    .playing
-        p Now Playing, your color is
-            span.color
+        a.btn.start(href='#') Start
+
+        .waiting
+            p Waiting for game to start
+        .playing
+            p Now Playing, your color is
+                span.color
