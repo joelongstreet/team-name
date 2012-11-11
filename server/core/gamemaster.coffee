@@ -25,8 +25,8 @@ class GameMaster extends EventEmitter
         race.on 'coach', (team) =>
             @emitToTeamViewers team, 'coach'
 
-        race.on 'surge', (data) =>
-            @emitToRacerViewers race, 'surge', data
+        race.on 'surge', (team, data) =>
+            @emitToRacerViewers race, 'surge', team, data
         
         race.on 'end', (winner) =>
             @emitToRacerEverywhere race, 'end',
