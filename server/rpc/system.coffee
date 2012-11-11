@@ -1,4 +1,3 @@
-# Server-side Code
 gameMaster = require('../core/gamemaster')
 awaitingSync = {}
 
@@ -7,11 +6,12 @@ exports.actions = (req, res, ss) ->
     req.use('session')
     req.use('randomizer.str')
     
+    games: () ->
+        res gameMaster
+
     sync: (type, token) ->
 
         handleViewer = (token) ->
-            console.log 'syncing viewer'
-            console.log awaitingSync
             s = awaitingSync[token]
 
             if s
@@ -20,12 +20,10 @@ exports.actions = (req, res, ss) ->
                 player.viewerId = req.session.userId
                 res null, player
                 delete awaitingSync[token]
-                console.log 'pairing complete!', player
             else
                 res "notFound"
 
         handleRemote = () ->
-            console.log 'syncing remote'
             gameMaster.addPlayer req.session.userId
 
             awaitingSync[req.session.userId] = 
@@ -40,7 +38,6 @@ exports.actions = (req, res, ss) ->
     
     updateSession: ()->
         req.session.save (err)->
-            console.log('Session data has been saved:', req.session)
             res(req.session)
             
     clearSession: () ->

@@ -55,7 +55,8 @@ class window.Remote
 
     end_game : (winner) ->
         $('.waiting').hide()
-        $('.waiting').show()
+        $('.playing').hide()
+        $('.waiting').removeClass('show')
         $('.playing').removeClass('show')
         @listener?.die()
         @listener = null
