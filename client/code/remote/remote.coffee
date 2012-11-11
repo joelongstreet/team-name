@@ -52,8 +52,8 @@ class window.Remote
         $('.playing').addClass('show')
 
     end_game : (winner) ->
-        #@listener.die()
-        #@listener = null
+        @listener.die()
+        @listener = null
             
 
 class RowListener
@@ -80,8 +80,7 @@ class RowListener
                 ss.rpc 'remote.broDown'
             ), 3000
 
-        $('.playing .tapper').click (e) =>
-            didAccelerationChange = true
+        $('.playing .tapper').on 'click', onClick 
             
         window.ondevicemotion = (e) ->
                 if didAccelerationChange then return
@@ -96,13 +95,17 @@ class RowListener
 
                 lastAcceleration = e.accelerationIncludingGravity.x;
 
-        setInterval ->
+        @listenerInterval = setInterval ->
             if didAccelerationChange
                 ss.rpc 'remote.rowBro'
                 audio.play '/audio/row.ogg'
 
             didAccelerationChange = false;
         , 100
+    
+    onClick: (e) ->
+        didAccelerationChange = true
 
     die : ->
-        console.log 'should die'
+        $('.playing .tapper').off 'click', onClick
+        clearInterval @listenerInterval
