@@ -24,7 +24,7 @@ ss.client.define('remote', {
   view: 'remote.jade',
   css:  ['libs/reset.css', 'app.styl'],
   code: ['libs/jquery.min.js', 'app'],
-  tmpl: ['common', 'remote']
+  tmpl: ['*']
 });
 
 // Serve this client on the root URL
