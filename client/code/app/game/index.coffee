@@ -2,6 +2,12 @@ class window.Game
 
     constructor : (boats) ->
 
+        @$view      = $(ss.tmpl['game-index'].render())
+        $('body').attr 'id', ''
+        $('body').attr 'class', ''
+        $('body').empty()
+        $('body').append @$view
+
         @stats = new Stats()
         @stats.render()
         #ss.event.on 'start', (boats) ->

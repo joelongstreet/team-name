@@ -8,14 +8,13 @@ block main
 
     h2 Your Room Code is
         span.code= 12345
-    p Tune into "http://rowbro.com/#{12345}" to watch
 
     a.btn.start(href='#') Start
 
     .waiting.modal
         p Waiting for game to start
-        h3 x
-    .playing.modal
+        //h3 x
+    .playing
         p Now Playing
 
     script(type="text/javascript") 

@@ -14,7 +14,6 @@ boats = [
 ]
 
 ss.event.on 'start', (data) ->
-   console.log 'started', data
    window.game = new Game(data.teams)
 
 #populate the game list

@@ -5,7 +5,7 @@ var http = require('http'),
 
 // Define a single-page client called 'main'
 ss.client.define('main', {
-  view: 'app.jade',
+  view: 'desktop_login.jade',
   css:  ['libs/reset.css', 'app.styl'],
   code: ['libs/jquery.min.js', 'app'],
   tmpl: '*'

@@ -1,6 +1,6 @@
 class window.Remote
 
-    constructor : -> 
+    constructor : ->
 
         $('.start').click (e) =>
 
