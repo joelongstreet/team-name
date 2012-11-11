@@ -34,6 +34,9 @@ class window.Game
                     if team.id == boat.id
                         boat.update_position(surge_data.surge)
 
+        ss.event.on 'end', () =>
+            @end_game()
+
 
     start_game : (data) ->
         @countdown()
