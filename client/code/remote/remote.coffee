@@ -18,7 +18,6 @@ class window.Remote
 
         $('.start').click (e) =>
             $('.waiting').addClass('show')
-            console.log 'clicked'
 
             ss.rpc 'team.join', (err, data) =>
                 console.log data
