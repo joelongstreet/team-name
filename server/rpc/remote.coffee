@@ -10,7 +10,6 @@ exports.actions = (req, res, ss) ->
             socketId: req.socketId
 
     rowBro: (message) ->
-        console.log message
         team = gameMaster.findTeam req.session.teamId
         team.row 
             sessionId: req.sessionId
