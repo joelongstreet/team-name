@@ -14,7 +14,7 @@ class GameMaster extends EventEmitter
         pair = []
 
         for k,p of @players
-            if p.ready and not p.inGame and p.viewerId
+            if (p.ready and not p.inGame) and p.viewerId
                 team = new Team(p.remoteId)
                 team.addPerson p
                 pair.push team

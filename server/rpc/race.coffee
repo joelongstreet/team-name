@@ -23,7 +23,7 @@ exports.actions = (req, res, ss) ->
             res(req.session)
     
     list: ()->
-        res gameMaster.races
+        res null, gameMaster.races
         
     start: () ->
         this.startTime = (new Date()).getTime();

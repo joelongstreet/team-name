@@ -19,5 +19,5 @@ exports.actions = (req, res, ss) ->
         res null, player
         
     list: ()->
-        res "team.list", gameMaster.teams
+        res null, gameMaster.players
         
