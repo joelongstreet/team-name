@@ -3,6 +3,7 @@ class window.Remote
     constructor : ->
 
         ss.rpc 'system.getUserId', (userId) =>
+            $('.start').show()
             @identifier = userId
             $('span.code, .reminder').text(@identifier)
             ss.rpc 'system.sync', 'remote'
@@ -16,9 +17,7 @@ class window.Remote
 
 
         ss.event.on 'start', (data) =>
-            alert 'game starting'
             @start_game(data)
-
 
         ss.event.on 'end', (winner) =>
             @end_game(winner)
