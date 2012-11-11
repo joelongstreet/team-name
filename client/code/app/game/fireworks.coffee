@@ -14,8 +14,6 @@ class Firework
 
     constructor : (@x, @y) ->
 
-        console.log 'new firework generated'
-
         @$sparks = []
         i = 0
         while i < 5
@@ -43,5 +41,4 @@ class Firework
         setTimeout (=>
             for spark in @$sparks
                 $(spark).remove()
-                console.log $(spark)
         ), 1500

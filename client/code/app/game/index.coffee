@@ -25,16 +25,15 @@ class window.Game
 
         # Listen and assign events
         ss.event.on 'surge', (team, surge_data) =>
-
-            console.log surge_data
-
+            console.log team.id
+            console.log @da_boat.id
             if team.id == @da_boat.id
                 @da_boat.move_forward()
                 @stats.update(surge_data)
-            else
-                for boat in @mini_boats
-                    if team.id == boat.id
-                        boat.update_position(surge_data.surge)
+            
+            for boat in @mini_boats
+                if team.id == boat.id
+                    boat.update_position(surge_data.surge)
 
         ss.event.on 'end', () =>
             @end_game()
@@ -49,7 +48,7 @@ class window.Game
         for boat in data.teams
             if boat.id == token
                 # Set the default selected boat as the first mini boat
-                @da_boat = new Boat(data.teams[0])
+                @da_boat = new Boat(boat)
                 @da_boat.render()
                 @da_boat.$view.addClass 'start'
             @mini_boats.push new MiniBoat(boat)

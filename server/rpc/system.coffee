@@ -13,7 +13,7 @@ exports.actions = (req, res, ss) ->
 
         handleViewer = (token) ->
             s = awaitingSync[token]
-            player = gameMaster.findPlayer s.remoteId
+            player = gameMaster.findPlayer token
 
             if s or player
                 if s.remoteId   
