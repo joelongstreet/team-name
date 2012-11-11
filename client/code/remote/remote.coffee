@@ -16,6 +16,9 @@ class window.Remote
             ss.rpc 'team.join', (err, data) ->
                 if err then alert err
                 else
+                    if data.color
+                        $('.playing').find('.color').text data.color
+                        $('.playing').css 'backgroundColor' : data.hex
                     $('.waiting').find('h3').text data.sessionId
                     $('.waiting').show()
 
@@ -28,10 +31,11 @@ class window.Remote
             $('.playing').addClass('show')
 
         ss.event.on 'end', (winner) ->
-            console.log 'server end'
-            console.log winner
-            @listener.die()
-            @listener = null
+            @end_game(winner)
+
+    end_game : (winner) ->
+        @listener.die()
+        @listener = null
             
 
 class RowListener
