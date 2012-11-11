@@ -3,10 +3,10 @@ class window.Remote
     constructor : -> 
 
         $('.start').click =>
-            ss.rpc 'team.join', (err, team_id) ->
+            ss.rpc 'team.join', (err, data) ->
                 if err then alert err
                 else
-                    console.log team_id
+                    $('.waiting').find('h3').text data.sessionId
                     $('.waiting').show()
 
         ss.event.on 'start', (data) ->

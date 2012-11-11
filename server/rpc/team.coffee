@@ -25,7 +25,10 @@ exports.actions = (req, res, ss) ->
 
         req.session.channel.subscribe team.id
         req.session.teamId = team.id
-        res null, team.id
+        res null, 
+            teamId: teamId
+            sessionId: req.sessionId
+            socketId: req.socketId
         
     list: ()->
         res "team.list", gameMaster.teams
