@@ -5,8 +5,6 @@ class window.Boat
 
     render : () ->
 
-        console.log @people
-
         $people = ''
         for person in @people
             $people += ss.tmpl['game-person'].render(person)
@@ -42,9 +40,10 @@ class window.Boat
         $('#watching').append @$view
 
     move_forward : ->
-
+        @$view.find('.ore').addClass 'row'
         @$view.addClass 'row'
         setTimeout (=>
+            @$view.find('.ore').removeClass 'row'
             @$view.removeClass 'row'
         ), 500
 
