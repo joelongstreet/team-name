@@ -4,7 +4,7 @@ ss = require('socketstream').api
 
 class GameMaster extends EventEmitter
 
-    constructor: (@teams = [], @races = []) ->
+    constructor: (@teams = [], @races = [], @players = []) ->
         setInterval () =>
             @pairUpTeams()
         , 3000
@@ -15,27 +15,43 @@ class GameMaster extends EventEmitter
         for t in @teams
             pair.push t if t and t.isFull()
             if pair.length == 2
-                @removeTeam pair
                 @runGame pair
                 pair = []
 
     runGame: (pair) ->
         race = @createRace pair
 
-        race.on 'surge', (data) ->
-            ss.publish.channel race.id, 'surge', data
+        race.on 'surge', (data) =>
+            @emitToRacerViewers race, 'surge', data
         
         race.on 'end', (winner) =>
-            ss.publish.channel race.id, 'end',                     
+            @emitToRacerViewers race, 'end',
                 raceId: race.id,
                 winner: winner
-
-            for r in @races
-                index = @races.indexOf r
-                @races.splice index, 1 if index >= 0
+            @removeTeam pair
+            @removeRace race
 
         race.start()
 
+    emitToRacerEverywhere: () ->
+        emitToRacerRemotes.apply this, arguments
+        emitToRacerViewers.apply this, arguments
+
+    emitToRacerRemotes: (race) ->
+        args = arguments.slice 1
+
+        for p in t.persons
+            ss.publish.user.apply(ss, [p.remoteId].concat(args)) if p.remoteId
+
+    emitToRacerViewers: (race) ->
+        args = arguments.slice 1
+
+        for p in t.persons
+            ss.publish.user.apply(ss, [p.viewerId].concat(args))
+    
+    findTeamByPlayer: (userId) ->
+
+    
     findTeam: (teamId) ->
         for r in @races
             for t in r.teams
@@ -43,6 +59,19 @@ class GameMaster extends EventEmitter
 
         for t in @teams
             return t if t.id is teamId
+    
+    findPlayer: (userId) ->
+        @players[userId]
+
+    removePlayer: (userId) ->
+        delete @players[userId]
+
+    addPlayer: (userId) ->
+        p = @players[userId] 
+
+        @players[userId] = 
+            remoteId: userId
+            viewerId: p.viewerId if p
 
     addTeam: (team) ->
         @teams = @teams.concat team
@@ -54,32 +83,26 @@ class GameMaster extends EventEmitter
             index = @teams.indexOf t
             @teams.splice index, 1 if index >= 0
     
+    removeRace: (race) ->
+        index = @races.indexOf race
+        @races.splice index, 1 if index >= 0
+
     createRace: (teams) ->
         race = new Race(teams)
         
         @races.push race
-       
-        # put all people in the race channel for progress updates
-        for t in teams
-            for p in t.persons
-                p.cb race.id
-                p.cb = null
+            
+        data =
+            raceId: race.id
+            teams: teams
+
+        t.start() for t in teams
+            
+        @emitToRacers race, 'start', data
+
+        # let the match maker know we've started a new race        
+        ss.publish.channel 'mm', 'start', data
         
-        # let the match maker know we've started a new race
-        ss.publish.channel 'mm', 'start', 
-            raceId: race.id
-            teams: teams
-
-        ss.publish.channel 'remote-12345', 'start'
-
-        # tell those who are racing we've begun
-        ss.publish.channel race.id, 'start', 
-            raceId: race.id
-            teams: teams
-
-        for t in teams
-            t.start()
-
         race
 
 module.exports = new GameMaster()
