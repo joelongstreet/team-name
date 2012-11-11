@@ -5,7 +5,7 @@ var http = require('http'),
 
 // Define a single-page client called 'main'
 ss.client.define('main', {
-  view: 'app.jade',
+  view: 'desktop_login.jade',
   css:  ['libs/reset.css', 'app.styl'],
   code: ['libs/jquery.min.js', 'app'],
   tmpl: '*'
@@ -23,8 +23,8 @@ ss.client.define('login', {
 ss.client.define('remote', {
   view: 'remote.jade',
   css:  ['libs/reset.css', 'app.styl'],
-  code: ['libs/jquery.min.js', 'app'],
-  tmpl: ['*']
+  code: ['libs/jquery.min.js', 'remote'],
+  tmpl: '*'
 });
 
 // Serve this client on the root URL
@@ -42,7 +42,11 @@ ss.http.route('/login', function(req, res){
 });
 
 ss.http.route('/remote', function(req, res){
-  res.serveClient('remote');
+  req.session.remoteId = '12345'
+
+  req.session.save(function () {
+    res.serveClient('remote');
+  })
 });
 
 ss.http.route('/mobile-login', function(req, res){

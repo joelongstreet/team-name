@@ -5,7 +5,7 @@ $ ->
     #=== "screen" login screen
     
     # submit create game on click
-    $('.create_game .btn').click (e)->
+    $('#create_game').click (e)->
         e.preventDefault()
         exports.join_team()
     
@@ -28,12 +28,11 @@ $ ->
         window.me = res
         exports.list_teams()
 
-
 # Shared Methods
 
 exports.join_team = (id)->
     
-    ss.rpc 'team.join', id, (err, res)->
+    ss.rpc 'remote.sync', id, (err, res) ->
         if err
             console.error(id, err)
         else
@@ -58,7 +57,8 @@ exports.list_teams = ()->
 
 
 exports.subscribe_team = (id)->
-    
+    ss.server.on 'start', (data) ->
+        window.game = new Game(data)
     ss.server.on 'surge', ->
         console.log 'surge', arguments
     ss.server.on 'end', ->

@@ -1,11 +1,11 @@
 class window.Remote
 
     constructor : ->
-        # @identifier = window.me.remoteId
-        
-        # $('span.code').text(@identifier)
 
-        # ss.rpc 'sync', @identifier
+        ss.rpc 'system.getSession', (res) =>
+            @identifier = res.remoteId
+            $('span.code').text(@identifier)
+            ss.rpc 'remote.sync', res.remoteId
 
         $('.start').click (e) =>
 

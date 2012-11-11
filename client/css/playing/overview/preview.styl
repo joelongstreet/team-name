@@ -1,20 +1,15 @@
+@import 'mini_boat'
+
 #preview
+    color                   $brown
     margin                  20px
     height                  220px
     box-shadow              5px 5px 0 rgba(255,255,255,.5)
 
     #boats
-        margin-left         10px
+        margin-left         50px
         margin-top          -20px
         position            relative
-
-        .mini_boat
-            position        absolute
-            height          15px
-            width           15px
-            background      $orange url($boat) repeat
-            box-shadow      2px 2px 0 $orange2
-            transition      .25s all ease-out
 
         for iterator in 1 2 3 4 5 6
             .mini_boat:nth-child({iterator})
@@ -29,18 +24,21 @@
         .marker
             width           100%
             position        absolute
+            margin-bottom   15px
 
         for iterator in 1 2 3 4 5 6
             .marker:nth-child({iterator})
                 bottom      15%*(iterator - 1)
-
+ 
         .line
             float           right
             margin-right    10%    
             width           70%
-            height          2px
-            background-color white
+            height          1px
+            box-shadow      1px 1px 0 $grey
+            background-color $brown
 
         .value
             font-size       130%
             float           left
+            margin-top      -5px

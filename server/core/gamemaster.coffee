@@ -69,7 +69,9 @@ class GameMaster extends EventEmitter
         ss.publish.channel 'mm', 'start', 
             raceId: race.id
             teams: teams
-        
+
+        ss.publish.channel 'remote-12345', 'start'
+
         # tell those who are racing we've begun
         ss.publish.channel race.id, 'start', 
             raceId: race.id
