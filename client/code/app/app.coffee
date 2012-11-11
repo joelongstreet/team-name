@@ -1,3 +1,3 @@
-setInterval (->
-    $('body').toggleClass 'wave'
-), 1250
+#setInterval (->
+    #$('body').toggleClass 'wave'
+#), 1250

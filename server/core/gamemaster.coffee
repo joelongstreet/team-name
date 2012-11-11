@@ -1,25 +1,36 @@
 EventEmitter = require('events').EventEmitter
 Race = require './race'
+Team = require './team'
 ss = require('socketstream').api
 
 class GameMaster extends EventEmitter
 
-    constructor: (@teams = [], @races = [], @players = []) ->
+    constructor: (@teams = [], @races = [], @players = {}) ->
         setInterval () =>
             @pairUpTeams()
         , 3000
 
     pairUpTeams: () ->
         pair = []
+        for k,p of @players
 
-        for t in @teams
-            pair.push t if t and t.isFull()
+            if p.inGame or not p.ready
+                continue
+
+            team = new Team(p.remoteId)
+            pair.push team
+
             if pair.length == 2
-                @removeTeam pair
                 @runGame pair
                 pair = []
 
     runGame: (pair) ->
+
+        for p in pair
+            p.inGame = true 
+            p.ready = false
+            console.log p
+
         race = @createRace pair
         
         @emitToRacerEverywhere race, 'start', race
@@ -34,7 +45,7 @@ class GameMaster extends EventEmitter
             @emitToRacerEverywhere race, 'end',
                 raceId: race.id,
                 winner: winner
-            @removeTeam pair
+            p.inGame = false for p in pair
             @removeRace race
 
         race.start()
@@ -67,9 +78,18 @@ class GameMaster extends EventEmitter
                 console.log 'viewerEmit', p.viewerId
                 ss.publish.user.apply(ss, [p.viewerId].concat(args)) if p.viewerId
     
-    findTeamByPlayer: (userId) ->
+    findTeamByRemoteId: (remoteId) ->
+        for r in @races
+            for t in r.teams
+                for p in t.persons
+                    if p.remoteId is remoteId
+                        return t
 
-    
+        for t in @teams
+            for p in t.persons
+                if p.remoteId is remoteId
+                    return t
+
     findTeam: (teamId) ->
         for r in @races
             for t in r.teams
@@ -78,18 +98,28 @@ class GameMaster extends EventEmitter
         for t in @teams
             return t if t.id is teamId
     
-    findPlayer: (userId) ->
-        @players[userId]
+    findPlayer: (remoteId) ->
+        @players[remoteId]
 
-    removePlayer: (userId) ->
-        delete @players[userId]
+    removePlayer: (remoteId) ->
+        delete @players[remoteId]
 
-    addPlayer: (userId) ->
-        p = @players[userId] 
+    addPlayer: (remoteId) ->
+        if not remoteId
+            return
 
-        @players[userId] = 
-            remoteId: userId
-            viewerId: p.viewerId if p
+        player = @players[remoteId] 
+
+        if not player
+            @players[remoteId] = 
+                remoteId: remoteId
+                viewerId: undefined
+                ready: false
+                inGame: false
+
+            player = @players[remoteId]
+        
+        player
 
     addTeam: (team) ->
         @teams = @teams.concat team
