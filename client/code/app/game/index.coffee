@@ -67,10 +67,10 @@ class window.Game
         wave_flags = setInterval (->
             $('#checkered_flag').toggleClass 'wave'
             if iterator == 5
-                clearInterval wave_flags
-                $('.boat').fadeOut('slow')
-                $('#checkered_flag').fadeOut('fast')
-                window.game = new Game()
+                #clearInterval wave_flags
+                #$('.boat').fadeOut('slow')
+                #$('#checkered_flag').fadeOut('fast')
+                window.location.reload()
 
             iterator++
         ), 750
