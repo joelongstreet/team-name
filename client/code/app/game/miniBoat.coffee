@@ -1,9 +1,9 @@
 class window.MiniBoat
 
     constructor : (data) ->
-
         @$preview   = $('#preview').find('#boats')
-        @people     = data.people
+        @people     = data.persons
+        @id         = data.id
         @$view      = $(ss.tmpl['game-miniBoat'].render())
 
         @$preview.append @$view

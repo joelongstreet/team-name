@@ -47,7 +47,11 @@ class GameMaster extends EventEmitter
             p.inGame = false for p in pair
             @removeRace race
 
-        race.start()
+        # give the UI a few seconds to show a countdown then start
+        # pumping out coach events and receiving rows
+        setTimeout () =>
+            race.start()
+        , 3000
 
     emitToTeamViewers: (team) ->
         args = Array.prototype.slice.call arguments, 1

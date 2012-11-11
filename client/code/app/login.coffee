@@ -13,6 +13,7 @@ $ ->
             if err
                 alert "no team remote found with token of '#{token}'"
             else
+                window.token = token
                 window.game = new Game()
 
     # submit on enter

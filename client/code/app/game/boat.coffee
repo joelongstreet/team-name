@@ -2,8 +2,7 @@ class window.Boat
 
     constructor : (data) ->
         @people = data.persons
-        @id = data.id
-        console.log 'boat id', @id
+        @id     = data.id
 
     render : () ->
 
@@ -13,12 +12,13 @@ class window.Boat
 
         @$view = $(ss.tmpl['game-boat'].render())
         @$view.find('.people').append $people
+        @$view.find('.people').append $people
         @$rowCallout = @$view.find('#row')
 
         css_class = ''
         
         switch @people.length
-            when 1 then css_class = 'one'
+            when 1 then css_class = 'two'
             when 2 then css_class = 'two'
             when 4 then css_class = 'four'
             when 6 then css_class = 'six'

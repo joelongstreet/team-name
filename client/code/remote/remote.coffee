@@ -1,3 +1,5 @@
+audio = require '/audio'
+
 class window.Remote
 
     constructor : ->
@@ -16,14 +18,22 @@ class window.Remote
 
         $('.start').click (e) =>
             $('.waiting').addClass('show')
+            console.log 'clicked'
 
             ss.rpc 'team.join', (err, data) =>
                 console.log data
                 @assign_team(data)
 
 
+        game_started = false
+        ss.event.on 'coach', () =>
+            game_started = true
+            $('.playing').addClass('show')
+
         ss.event.on 'start', (data) =>
-            @start_game(data)
+            if game_started is false
+                game_started = true
+                @start_game(data)
 
         ss.event.on 'end', (winner) =>
             @end_game(winner)
@@ -52,7 +62,7 @@ class RowListener
 
         lastAcceleration        = undefined;
         didAccelerationChange   = false;
-        threshold               = 3;
+        threshold               = 15;
 
         window.addEventListener 'touchstart', ->
             clearTimeout touchTimeout
@@ -75,9 +85,8 @@ class RowListener
             
         window.ondevicemotion = (e) ->
                 if didAccelerationChange then return
-
-                if (typeof lastAcceleration != 'undefined')
-
+                
+                if typeof lastAcceleration != 'undefined'
                     currentSign = e.accelerationIncludingGravity.x >= 0 ? 1: 0
                     lastSign = lastAcceleration >= 0 ? 1 : 0
 
@@ -87,15 +96,13 @@ class RowListener
 
                 lastAcceleration = e.accelerationIncludingGravity.x;
 
-        setInterval (->
-                
+        setInterval ->
             if didAccelerationChange
                 ss.rpc 'remote.rowBro'
-
+                audio.play '/audio/row.ogg'
 
             didAccelerationChange = false;
-
-        ), 100
+        , 100
 
     die : ->
         console.log 'should die'

@@ -14,26 +14,28 @@ class window.Game
         @stats = new Stats()
         @stats.render()
 
+        game_started = false
         ss.event.on 'start', (data) =>
-            @start_game(data)
+            if game_started is false
+                game_started = true
+                @start_game(data)
+                setTimeout (->
+                    game_started = false
+                ), 3000
 
         # Listen and assign events
         ss.event.on 'surge', (team, surge_data) =>
-            @da_boat.move_forward()
-            @stats.update(surge_data)
-
-            console.log surge_data
-            console.log team.id
-            console.log @data_boat.id
 
             if team.id == @da_boat.id
                 @da_boat.move_forward()
                 @stats.update(surge_data)
-                @move_forward()
             else
                 for boat in @mini_boats
-                    if surge_data.id == boat.id
-                        boat.update_position(surge_data.position)
+                    if team.id == boat.id
+                        boat.update_position(surge_data.surge)
+
+        ss.event.on 'end', () =>
+            @end_game()
 
 
     start_game : (data) ->
@@ -41,13 +43,14 @@ class window.Game
 
         # Build out mini boats for preview section
         @mini_boats = []
+        $('#boats').empty()
         for boat in data.teams
+            if boat.id == token
+                # Set the default selected boat as the first mini boat
+                @da_boat = new Boat(data.teams[0])
+                @da_boat.render()
+                @da_boat.$view.addClass 'start'
             @mini_boats.push new MiniBoat(boat)
-
-        # Set the default selected boat as the first mini boat
-        @da_boat = new Boat(data.teams[0])
-        @da_boat.render()
-        @da_boat.$view.addClass 'start'
 
         # Row Call Out
         ss.event.on 'coach', () =>
@@ -62,12 +65,12 @@ class window.Game
         # wave the flag
         iterator = 0
         wave_flags = setInterval (->
+            $('#checkered_flag').toggleClass 'wave'
             if iterator == 5
                 clearInterval wave_flags
                 $('.boat').fadeOut('slow')
                 $('#waiting').fadeIn('slow')
                 $('#checkered_flag').fadeOut('fast')
-            $('#checkered_flag').toggleClass 'wave'
 
             iterator++
         ), 750

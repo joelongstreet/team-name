@@ -8,6 +8,8 @@ class Race extends EventEmitter
 
     start: () ->
         for t in @teams
+            t.start()
+            
             t.on 'surge', (team, data) =>
                 @onSurge team, data
 
@@ -17,7 +19,7 @@ class Race extends EventEmitter
     onSurge: (team, data) ->
         @emit 'surge', team, data
 
-        if team.surge >= 100
+        if data.surge >= 100
             @emit 'end', team 
             t.disband() for t in @teams
 

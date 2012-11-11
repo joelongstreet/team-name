@@ -122,11 +122,11 @@
             left                -85px
             top                 17px
 
-            &.row:even
-                animation       row_ore_right 1.5s
-
             &.row
                 animation       row_ore 1.5s
+
+            &:nth-child(even)
+                animation       row_ore_right 1.5s
 
             &.lose
                 animation       lose_ore 1.5s
