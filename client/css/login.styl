@@ -10,20 +10,23 @@ body#login
             width       50%
 
             .explain
-                margin-bottom 35px
-                color       $white
-                line-height 130%
-                font-size   150%
-                text-shadow 2px 2px 0 black
+                margin-bottom   35px
+                color           $white
+                line-height     130%
+                font-size       150%
+                text-shadow     2px 2px 0 black
                 p
                     margin-bottom 30px
             .login
-                margin-bottom  50px
+                margin-bottom   50px
             .btn
-                font-size 250%
-                float   right
+                box-shadow      5px 5px 0 $red2
+                margin-top      2px
+                float           right
+                font-size       300%
+                margin-right    100px
             input
-                width   50%
+                width           50%
 
         .left
             width       40%
@@ -61,28 +64,44 @@ body#login
                     margin-right 10px
 
 header
+    
+    position                relative
 
     .ore
         position            absolute
-        right               0
-        top                 17px
+        right               75px
+        top                 40px
         width               150px
-        height              150px
-        &:first-child
-            left            0
-            right           auto
+        height              25px
+        transform-origin    20% 100%
+        animation           row_bro 1.5s ease-in infinite
 
         .handle
             position        absolute
-            width           75px
+            left            0
+            top             10px
+            width           100px
             height          6px
             background      $red url($red_pattern) repeat
             box-shadow      2px 2px 0 $red2
+
         .paddle
+            right           0
+            top             0
             position        absolute
-            margin-left     -35px
-            margin-top      -5px
-            width           45px
+            width           50px
             height          25px
             background      $red url($red_pattern) repeat
             box-shadow      2px 2px 0 $red2
+
+        &:first-child
+            left            75px
+            right           auto
+            transform-origin    80% 0%
+            animation       row_bro_backwards 1.5s ease-in infinite
+            .handle
+                left        auto
+                right       0
+            .paddle
+                left        0
+                right       auto
