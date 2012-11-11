@@ -17,6 +17,7 @@ var marlon_rando = function(len){
 }
 
 var setOrCreateUID = function(req, cb){
+  req.session.deviceType = /mobile/i.test(req.headers['user-agent']) ? 'remote' : 'display';
   if (req.session.userId) {
     cb();
   } else {
