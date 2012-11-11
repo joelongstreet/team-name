@@ -18,7 +18,7 @@ class Team extends EventEmitter
         @interval = interval
         newInterval = 1000 * @interval
 
-        setInterval () =>
+        @rowInterval = setInterval () =>
             @emit 'coach', @, @interval
             @evaluateRows()
             @startNewPeriod(++@period % @trackCount)
@@ -58,24 +58,24 @@ class Team extends EventEmitter
                 surge: ++@surge * 10
                 screwUps: screwUps
 
-        @evaluateOverallPerformance()
+        # @evaluateOverallPerformance()
 
-    evaluateOverallPerformance: () ->
-        isSuperDuper = true
+    # evaluateOverallPerformance: () ->
+    #     isSuperDuper = true
 
-        #have all periods being tracked been successful as a team?
-        for k,v of @periods
-            if !v.success
-                isSuperDuper = false
-                break
+    #     #have all periods being tracked been successful as a team?
+    #     for k,v of @periods
+    #         if !v.success
+    #             isSuperDuper = false
+    #             break
 
-        #if the team has been awesome make them go faster!
-        if isSuperDuper and @interval >= .1
-            @setRowInterval @interval * .8
-            for k,v of @periods
-                v.success = false
-        else if @interval < .1
-            @setRowInterval .1
+    #     #if the team has been awesome make them go faster!
+    #     if isSuperDuper and @interval >= .1
+    #         @setRowInterval @interval * .8
+    #         for k,v of @periods
+    #             v.success = false
+    #     else if @interval < .1
+    #         @setRowInterval .1
     
     broDown: (person) ->
 
@@ -85,7 +85,8 @@ class Team extends EventEmitter
         currentPeriod.people[person.socketId]++
     
     disband: () ->
-        @removeListeners()
+        @removeAllListeners()
+        clearInterval @rowInterval if @rowInterval
         
     addPerson: (person) ->
         full = @isFull() 

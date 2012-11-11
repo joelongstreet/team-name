@@ -6,8 +6,8 @@ exports.actions = (req, res, ss) ->
 
     broDown: (message) ->
         team = gameMaster.findTeamByRemoteId req.session.userId
-        team.broDown req.session.userId
+        team.broDown req.session.userId if team
 
     rowBro: (message) ->
         team = gameMaster.findTeamByRemoteId req.session.userId
-        team.row req.session.userId
+        team.row req.session.userId if team
