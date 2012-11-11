@@ -87,14 +87,9 @@ class Team extends EventEmitter
     disband: () ->
         @removeListeners()
         
-    addPerson: (socketId, sessionId) ->
+    addPerson: (person) ->
         full = @isFull() 
         return false if full
-        
-        person = 
-            socketId: socketId
-            sessionId: sessionId
-        
         @persons.push person
         @emit 'full' if @isFull()  
         return true
