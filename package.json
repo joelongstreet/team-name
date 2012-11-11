@@ -1,10 +1,10 @@
 {
   "name": "rowbro",
   "description": "Bro who row are bros named Joe",
-  "version": "0.0.1-6",
+  "version": "0.0.2-1",
   "author": [
-    "Joe Andaverde <joe@gmail.com>",
-    "Joe Longstreet <joe@gmail.com>",
+    "Joseph Andaverde <joe@andaverde.net>",
+    "Joe Longstreet <joelongstreet@gmail.com>",
     "Russell Madsen <ruzz311@gmail.com>"
   ],
   "private": true,
