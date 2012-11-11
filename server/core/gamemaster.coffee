@@ -56,24 +56,29 @@ class GameMaster extends EventEmitter
     
     createRace: (teams) ->
         race = new Race(teams)
+        
         @races.push race
        
+        startGame = () ->
+            # let the match maker know we've started a new race
+            ss.publish.channel 'mm', 'start', 
+                raceId: race.id
+                teams: teams
+            
+            # tell those who are racing we've begun
+            ss.publish.channel race.id, 'start', 
+                raceId: race.id
+                teams: teams
+        i = 0
         # put all people in the race channel for progress updates
         for t in teams
             for p in t.persons
                 ss.session.find p.sessionId, p.socketId, (s) ->
                     s.channel.subscribe race.id if s
- 
-        # let the match maker know we've started a new race
-        ss.publish.channel 'mm', 'start', 
-            raceId: race.id
-            teams: teams
         
-        # tell those who are racing we've begun
-        ss.publish.channel race.id, 'start', 
-            raceId: race.id
-            teams: teams
-        
+                    if ++i is 2
+                        startGame()   
+
         race
 
 module.exports = new GameMaster()
