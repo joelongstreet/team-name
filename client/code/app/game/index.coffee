@@ -15,6 +15,7 @@ class window.Game
         @stats.render()
 
         ss.event.on 'start', (data) ->
+            console.log 'receiving start', data
             @countdown()
 
             # Build out mini boats for preview section
