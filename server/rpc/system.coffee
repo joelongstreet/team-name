@@ -13,10 +13,14 @@ exports.actions = (req, res, ss) ->
 
         handleViewer = (token) ->
             s = awaitingSync[token]
+            player = gameMaster.findPlayer s.remoteId
 
-            if s
-                player = gameMaster.findPlayer s.remoteId
-                player.remoteId = s.remoteId
+            if s or player
+                if s.remoteId   
+                    player.remoteId = s.remoteId
+                else
+                    player.remoteId = token
+
                 player.viewerId = req.session.userId
                 res null, player
                 delete awaitingSync[token]
