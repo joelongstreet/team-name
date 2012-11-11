@@ -26,6 +26,8 @@ class window.Game
         # Listen and assign events
         ss.event.on 'surge', (team, surge_data) =>
 
+            console.log surge_data
+
             if team.id == @da_boat.id
                 @da_boat.move_forward()
                 @stats.update(surge_data)
@@ -67,10 +69,10 @@ class window.Game
         wave_flags = setInterval (->
             $('#checkered_flag').toggleClass 'wave'
             if iterator == 5
-                clearInterval wave_flags
-                $('.boat').fadeOut('slow')
-                $('#checkered_flag').fadeOut('fast')
-                window.game = new Game()
+                #clearInterval wave_flags
+                #$('.boat').fadeOut('slow')
+                #$('#checkered_flag').fadeOut('fast')
+                window.location.reload()
 
             iterator++
         ), 750

@@ -17,7 +17,8 @@ class window.Remote
             ss.rpc 'system.sync', 'remote'
         
         $('.tapper').click (e) =>
-            @listener.didAccelerationChange = true if @listener
+            if @listener
+                ss.rpc 'remote.rowBro'
         
         $('.start').click (e) =>
             $('.waiting').addClass('show')
@@ -27,7 +28,7 @@ class window.Remote
                 @assign_team(data)
 
         game_started = false
-        
+
         ss.event.on 'coach', () =>
             @listener = new RowListener() if !@listener
             game_started = true
@@ -54,6 +55,10 @@ class window.Remote
         @listener = new RowListener()
 
     end_game : (winner) ->
+        $('.waiting').hide()
+        $('.playing').hide()
+        $('.waiting').removeClass('show')
+        $('.playing').removeClass('show')
         @listener?.die()
         @listener = null
             
@@ -98,9 +103,6 @@ class RowListener
 
             didAccelerationChange = false;
         , 100
-    
-    onClick: (e) ->
-        didAccelerationChange = true
 
     die: ->
-        clearInterval @listenerInterval
+        window.location.reload()
