@@ -13,11 +13,11 @@ class GameMaster extends EventEmitter
     pairUpTeams: () ->
         pair = []
         for k,p of @players
-            if p?.inGame or not p.ready
+
+            if p.inGame or not p.ready
                 continue
 
             team = new Team(p.remoteId)
-
             pair.push team
 
             if pair.length == 2
@@ -29,6 +29,7 @@ class GameMaster extends EventEmitter
         for p in pair
             p.inGame = true 
             p.ready = false
+            console.log p
 
         race = @createRace pair
         
@@ -97,22 +98,28 @@ class GameMaster extends EventEmitter
         for t in @teams
             return t if t.id is teamId
     
-    findPlayer: (userId) ->
-        @players[userId]
+    findPlayer: (remoteId) ->
+        @players[remoteId]
 
-    removePlayer: (userId) ->
-        delete @players[userId]
+    removePlayer: (remoteId) ->
+        delete @players[remoteId]
 
-    addPlayer: (userId) ->
-        if not userId
+    addPlayer: (remoteId) ->
+        if not remoteId
             return
 
-        p = @players[userId] 
+        player = @players[remoteId] 
 
-        @players[userId] = 
-            remoteId: userId
-            viewerId: p.viewerId if p
-            ready: p.ready if p
+        if not player
+            @players[remoteId] = 
+                remoteId: remoteId
+                viewerId: undefined
+                ready: false
+                inGame: false
+
+            player = @players[remoteId]
+        
+        player
 
     addTeam: (team) ->
         @teams = @teams.concat team
