@@ -2,15 +2,12 @@ class window.Fireworks
 
     constructor : ->
 
-        console.log 'fireworkds initted'
-
-        setInterval (->
-            console.log 'int running'
-            x        = Math.floor(Math.random() * 200)
-            y        = Math.floor(Math.random() * 300)
-            firework = new Firework(x, y)
-            firework.explode()
-        ), 2500
+        #setInterval (->
+        x        = Math.floor(Math.random() * 200)
+        y        = Math.floor(Math.random() * 300)
+        firework = new Firework(x, y)
+        firework.explode()
+        #), 2500
 
 
 class Firework
@@ -23,11 +20,12 @@ class Firework
         i = 0
         while i < 5
             rando = Math.floor(Math.random() * 3)
-            spark = "<div style='top:#{@y}; left:#{@x}',  class='spark spark_#{rando}'></div>"
+            spark = "<div style='top:#{@y}px; left:#{@x}px',  class='spark spark_#{rando}'></div>"
 
             @$sparks.push spark
 
-            $('#fireworks').append spark
+            $('body').append spark
+            i++
 
 
     explode : ->
@@ -37,12 +35,13 @@ class Firework
             new_x = Math.floor(Math.random() * 200)
             new_y = Math.floor(Math.random() * 200)
 
-            spark.addClass 'explode'
-            spark.css
+            $(spark).addClass 'explode'
+            $(spark).css
                 'x' : new_x
                 'y' : new_y
 
         setTimeout (=>
             for spark in @$sparks
-                spark.remove()
+                $(spark).remove()
+                console.log $(spark)
         ), 1500

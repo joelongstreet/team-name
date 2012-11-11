@@ -2,25 +2,29 @@ class window.Game
 
     constructor : (boats) ->
 
-        @$view      = $(ss.tmpl['game-index'].render())
+        @$view = $(ss.tmpl['game-index'].render())
+
+        # Reset the Entire Stage
         $('body').attr 'id', ''
         $('body').attr 'class', ''
         $('body').empty()
         $('body').append @$view
 
+        # Build out Stats Module
         @stats = new Stats()
         @stats.render()
-        #ss.event.on 'start', (boats) ->
 
+        # Build out mini boats for preview section
         @mini_boats = []
         for boat in boats
             @mini_boats.push new MiniBoat(boat)
 
-        # the default selected boat is the first
+        # Set the default selected boat as the first mini boat
         @da_boat = new Boat(boats[0])
         @da_boat.render()
         @da_boat.$view.addClass 'start'
 
+        # Listen and assign events
         ss.event.on 'surge', (surge_data) =>
             if surge_data.id == @da_boat.id
                 @da_boat.move_forward()
@@ -31,11 +35,30 @@ class window.Game
                     if surge_data.id == boat.id
                         boat.update_position(surge_data.position)
 
+        # Row Call Out
         ss.event.on 'coach', () =>
             @da_boat.row_callout()
 
         @countdown()
 
+
+    end_game : ->
+        $('#finish_line').addClass 'show'
+        $('h1#row').fadeOut('fast')
+        $('#checkered_flag').fadeIn('fast')
+
+        # wave the flag
+        iterator = 0
+        wave_flags = setInterval (->
+            if iterator == 5
+                clearInterval wave_flags
+                $('.boat').fadeOut('slow')
+                $('#checkered_flag').fadeOut('fast')
+            $('#checkered_flag').toggleClass 'wave'
+
+            iterator++
+        ), 750
+        
 
     countdown : ->
 
