@@ -2,6 +2,8 @@ class window.Boat
 
     constructor : (data) ->
         @people = data.persons
+        @id = data.id
+        console.log 'boat id', @id
 
     render : () ->
 
@@ -48,8 +50,8 @@ class window.Boat
         ), 500
 
     row_callout : ->
-        @$rowCallout.removeClass 'call'
-    
+
+        $('#row').removeClass 'call'
         setTimeout () =>
-            @$rowCallout.addClass 'call'
-        , 0
+            $('#row').addClass 'call'
+        , 1
