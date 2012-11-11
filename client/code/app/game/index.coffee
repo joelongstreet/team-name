@@ -65,5 +65,6 @@ class window.Game
         ), 2000
 
         setTimeout (=>
+            $countdown.find('waiting').remove()
             $countdown.text '3'
         ), 1000

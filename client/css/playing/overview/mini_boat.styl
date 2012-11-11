@@ -1,0 +1,41 @@
+.mini_boat
+    position        absolute
+    height          15px
+    width           15px
+    background      $orange url($boat) repeat
+    box-shadow      2px 2px 0 $orange2
+    transition      .25s all ease-out
+
+    .person
+        width       5px
+        height      5px
+        margin      5px auto
+        background-color $white
+
+    .head, .ass
+        position            absolute
+        top                 -15px
+        height              15px
+        width               100%
+
+        div
+            background      $orange url($boat) repeat
+            box-shadow      2px 2px 0 $orange2
+            margin          auto
+            height          5px
+            &.one
+                width       40%
+            &.two
+                width       60%
+            &.three
+                width       80%
+                box-shadow  2px 0px 0 $orange2
+
+    .ass
+        top                 auto
+        bottom              -15px
+        transform           rotateZ(180deg)
+        div
+            box-shadow      -2px 2px 0 $orange2
+            &.three
+                box-shadow  -2px 0px 0 $orange2
