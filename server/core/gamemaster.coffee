@@ -98,6 +98,7 @@ class GameMaster extends EventEmitter
     removeRace: (race) ->
         index = @races.indexOf race
         @races.splice index, 1 if index >= 0
+        ss.publish.all 'mm.end', race
 
     createRace: (teams) ->
         race = new Race(teams)
@@ -113,7 +114,7 @@ class GameMaster extends EventEmitter
         @emitToRacerEverywhere race, 'start', data
 
         # let the match maker know we've started a new race        
-        ss.publish.channel 'mm', 'start', data
+        ss.publish.all 'mm.start', data
         
         race
 

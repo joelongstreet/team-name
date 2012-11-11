@@ -2,7 +2,7 @@ window.me = null
 
 $ ->
 
-    #=== "screen" login screen
+    #=== "mm" login screen
     
     # submit create game on click
     $('#create_game').click (e)->
@@ -27,14 +27,18 @@ $ ->
         exports.join_team $.trim($(this).siblings('.code').text())
     
     exports.list_teams()
-
+    
+    ss.server.on 'mm.start', ->
+        console.log("game started")
 # Shared Methods
 
 exports.list_teams = ()-> 
-
+        
     ss.rpc 'race.list', null, (err, races) ->
         $container = $('.current_games')
         html = ""
+        
+        unless races then return
         
         if races.length < 1
             $container.html("<div>no games currently</div>")
