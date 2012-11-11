@@ -4,6 +4,8 @@ class window.Remote
 
     constructor : ->
 
+        new RowListener()
+
         #stop the window from being scrolled
         document.addEventListener 'touchmove',
           (e)-> 
@@ -54,7 +56,7 @@ class RowListener
 
         lastAcceleration        = undefined;
         didAccelerationChange   = false;
-        threshold               = 3;
+        threshold               = 15;
 
         window.addEventListener 'touchstart', ->
             clearTimeout touchTimeout
@@ -77,9 +79,8 @@ class RowListener
             
         window.ondevicemotion = (e) ->
                 if didAccelerationChange then return
-
-                if (typeof lastAcceleration != 'undefined')
-
+                
+                if typeof lastAcceleration != 'undefined'
                     currentSign = e.accelerationIncludingGravity.x >= 0 ? 1: 0
                     lastSign = lastAcceleration >= 0 ? 1 : 0
 
@@ -89,16 +90,13 @@ class RowListener
 
                 lastAcceleration = e.accelerationIncludingGravity.x;
 
-        setInterval (->
-                
+        setInterval ->
             if didAccelerationChange
                 ss.rpc 'remote.rowBro'
                 audio.play '/audio/row.ogg'
 
-
             didAccelerationChange = false;
-
-        ), 100
+        , 100
 
     die : ->
         console.log 'should die'
