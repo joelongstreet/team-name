@@ -5,13 +5,9 @@ exports.actions = (req, res, ss) ->
     req.use 'session'
 
     broDown: (message) ->
-        team = gameMaster.findTeamByPlayer req.session.teamId
-        team.broDown 
-            sessionId: req.sessionId
-            socketId: req.socketId
+        team = gameMaster.findTeamByRemoteId req.session.userId
+        team.broDown req.session.userId
 
     rowBro: (message) ->
-        team = gameMaster.findTeamByPlayer req.session.userId
-        team.row 
-            sessionId: req.sessionId
-            socketId: req.socketId
+        team = gameMaster.findTeamByRemoteId req.session.userId
+        team.row req.session.userId

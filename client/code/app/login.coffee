@@ -4,33 +4,24 @@ $ ->
 
     #=== "screen" login screen
     
-    # submit create game on click
-    ###
-    $('#create_game').click (e)->
-        e.preventDefault()
-        exports.join_team()
-    ###
-    
-    # submit on click    
+    # submit on click
     $('.login .btn').click (e)->
         e.preventDefault()
-        token = $(this).siblings('input').val()
+        token = $(this).siblings('input').val().toLowerCase()
         ss.rpc 'system.sync', 'viewer', token, (err, data) ->
             if err
-                alert 'no team remote found with specified token'
+                alert "no team remote found with token of '#{token}'"
             else
                 window.game = new Game()
 
     # submit on enter
     $('.login input').keyup (e)->
-        if e.which == 13 then $('.login .btn').trigger("click")
-    
-    # submit on enter
-    $('.left').on 'click', '.game > .btn', (e)->
-        e.preventDefault()
-        exports.join_team $.trim($(this).siblings('.code').text())
+        if e.which is 13 then $('.login .btn').trigger("click")
     
     #exports.list_teams()
+    ss.server.on 'mm.start', ->
+        console.log("game started")
+
 
 # Shared Methods
 
