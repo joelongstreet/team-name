@@ -5,7 +5,7 @@ $ ->
     #=== "screen" login screen
     
     # submit create game on click
-    $('.create_game .btn').click (e)->
+    $('#create_game').click (e)->
         e.preventDefault()
         exports.join_team()
     
