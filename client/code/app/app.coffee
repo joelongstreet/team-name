@@ -13,7 +13,10 @@ boats = [
     people : ['33333', '33333', '33333', '33333', '33333', '33333', '33333', '33333']
 ]
 
-window.game = new Game(boats)
+#window.game = new Game(boats)
+
+ss.event.on 'start', (data) ->
+    window.game = new Game(data)
 
 #populate the game list
 exports.updateSession = ->
