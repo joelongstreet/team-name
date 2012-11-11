@@ -8,29 +8,28 @@ class GameMaster extends EventEmitter
     constructor: (@teams = [], @races = [], @players = {}) ->
         setInterval () =>
             @pairUpTeams()
-        , 3000
+        , 5000
 
     pairUpTeams: () ->
         pair = []
+
         for k,p of @players
+            if p.ready and not p.inGame
+                team = new Team(p.remoteId)
+                team.addPerson p
+                pair.push team
 
-            if p.inGame or not p.ready
-                continue
+                if pair.length == 2
+                    for t in pair
+                        for p2 in t.persons
+                            p2.inGame = true
+                            p2.ready = false
 
-            team = new Team(p.remoteId)
-            pair.push team
-
-            if pair.length == 2
-                @runGame pair
-                pair = []
+                    @runGame pair
+                    pair = []
 
     runGame: (pair) ->
-
-        for p in pair
-            p.inGame = true 
-            p.ready = false
-            console.log p
-
+        console.log 'rungame'
         race = @createRace pair
         
         @emitToRacerEverywhere race, 'start', race
