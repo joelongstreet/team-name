@@ -27,8 +27,9 @@ $ ->
 # Shared Methods
 
 exports.list_teams = ()-> 
-        
+    
     ss.rpc 'team.list', null, (err, teams) ->
+        console.log("team.list", teams)
         $container = $('.current_teams')
         html = "<div>no teams</div>"
         
@@ -47,20 +48,21 @@ exports.list_teams = ()->
         $container.html( html )
     
     ss.rpc 'race.list', null, (err, races) ->
+        console.log("race.list", races)
         $container = $('.current_races')
         html = "<div>no races</div>"
         
         unless races
             $container.html(html)
             return
-            
+        
         if races.length < 1
             $container.html(html)
             return
         
         html = ""
         for r in races
-            html += ss.tmpl['login-gamelist'].render({ teams: r.teams })
+            html += ss.tmpl['login-racelist'].render({ teams: r.teams })
             
         $container.html( html )
 

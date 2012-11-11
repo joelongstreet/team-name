@@ -55,7 +55,7 @@ class Team extends EventEmitter
                 accuracy: rowPercentage
                 period: @period
                 mph: @interval / 10
-                surge: ++@surge
+                surge: ++@surge * 10
                 screwUps: screwUps
 
         @evaluateOverallPerformance()
