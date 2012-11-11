@@ -2,7 +2,12 @@ class window.Remote
 
     constructor : -> 
 
-        $('.start').click =>
+        $('.start').click (e) =>
+
+            e.preventDefault()
+
+            $('.waiting').addClass('show')
+
             ss.rpc 'team.join', (err, data) ->
                 if err then alert err
                 else
@@ -14,6 +19,8 @@ class window.Remote
             console.log data
             my_team = data.id
             @listener = new RowListener()
+            $('.waiting').hide()
+            $('.playing').addClass('show')
 
         ss.event.on 'end', (winner) ->
             console.log 'server end'
