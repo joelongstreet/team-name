@@ -24,14 +24,16 @@ class window.Remote
                 console.log data
                 @assign_team(data)
 
+
         game_started = false
+        ss.event.on 'coach', () =>
+            game_started = true
+            $('.playing').addClass('show')
+
         ss.event.on 'start', (data) =>
             if game_started is false
                 game_started = true
                 @start_game(data)
-                setTimeout (->
-                    game_started = false
-                ), 3000
 
         ss.event.on 'end', (winner) =>
             @end_game(winner)
