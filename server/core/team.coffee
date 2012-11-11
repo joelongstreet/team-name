@@ -11,7 +11,7 @@ class Team extends EventEmitter
         @surge = 0
     
     start: () ->
-        console.log "#{@id} started!"
+        @isStarted = true
         @setRowInterval @interval
 
     setRowInterval: (interval) ->
@@ -57,34 +57,18 @@ class Team extends EventEmitter
                 mph: @interval / 10
                 surge: ++@surge * 10
                 screwUps: screwUps
-
-        # @evaluateOverallPerformance()
-
-    # evaluateOverallPerformance: () ->
-    #     isSuperDuper = true
-
-    #     #have all periods being tracked been successful as a team?
-    #     for k,v of @periods
-    #         if !v.success
-    #             isSuperDuper = false
-    #             break
-
-    #     #if the team has been awesome make them go faster!
-    #     if isSuperDuper and @interval >= .1
-    #         @setRowInterval @interval * .8
-    #         for k,v of @periods
-    #             v.success = false
-    #     else if @interval < .1
-    #         @setRowInterval .1
     
     broDown: (person) ->
 
     row: (person) ->
+        if not @isStarted then return
+
         currentPeriod = @getCurrentPeriod()
         currentPeriod.people[person.socketId] ||= 0 
         currentPeriod.people[person.socketId]++
     
     disband: () ->
+        @isStarted = false
         @removeAllListeners()
         clearInterval @rowInterval if @rowInterval
         
@@ -97,5 +81,5 @@ class Team extends EventEmitter
 
     isFull: () ->
         @persons.length == @teamSize
-
+    
 module.exports = Team
