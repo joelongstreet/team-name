@@ -14,19 +14,8 @@ class window.Game
         @stats = new Stats()
         @stats.render()
 
-        ss.event.on 'start', (data) ->
-            console.log 'receiving start', data
-            @countdown()
-
-            # Build out mini boats for preview section
-            @mini_boats = []
-            for boat in data.boats
-                @mini_boats.push new MiniBoat(boat)
-
-            # Set the default selected boat as the first mini boat
-            @da_boat = new Boat(boats[0])
-            @da_boat.render()
-            @da_boat.$view.addClass 'start'
+        ss.event.on 'start', (data) =>
+            @start_game(data)
 
         # Listen and assign events
         ss.event.on 'surge', (surge_data) =>
@@ -42,6 +31,19 @@ class window.Game
         # Row Call Out
         ss.event.on 'coach', () =>
             @da_boat.row_callout()
+
+    start_game : (data) ->
+        @countdown()
+
+        # Build out mini boats for preview section
+        @mini_boats = []
+        for boat in data.boats
+            @mini_boats.push new MiniBoat(boat)
+
+        # Set the default selected boat as the first mini boat
+        @da_boat = new Boat(data.boats[0])
+        @da_boat.render()
+        @da_boat.$view.addClass 'start'
 
 
     end_game : ->
@@ -64,14 +66,14 @@ class window.Game
         
 
     countdown : ->
-
+        countdown_int = null
         $countdown  = $('#countdown')
         $line       = $('#starting_line')
 
         setTimeout (=>
             $countdown.text 'GO'
 
-            setInterval (=>
+            countdown_int = setInterval (=>
                 $countdown.toggleClass 'flash'
             ), 200
 
@@ -79,6 +81,7 @@ class window.Game
                 $countdown.fadeOut 'fast'
                 @da_boat.$view.removeClass 'start'
                 $line.addClass 'go_away'
+                clearInterval countdown_int
             ), 1500
         ), 4000
 

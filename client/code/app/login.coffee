@@ -1,7 +1,8 @@
 window.me = null
 
 $ ->
-
+    exports.list_teams()
+    
     #=== "screen" login screen
     
     # submit on click
@@ -26,19 +27,42 @@ $ ->
 # Shared Methods
 
 exports.list_teams = ()-> 
-
-    ss.rpc 'race.list', null, (err, races) ->
-        $container = $('.current_games')
-        html = ""
         
-        if races.length < 1
-            $container.html("<div>no games currently</div>")
+    ss.rpc 'team.list', null, (err, teams) ->
+        $container = $('.current_teams')
+        html = "<div>no teams</div>"
+        
+        unless teams 
+            $container.html(html)
             return
             
-        for r in races
-            html += ss.tmpl['login-gamelist'].render(r.teams)
+        if teams.length < 1
+            $container.html(html)
+            return
+        
+        html = ""
+        for t in teams
+            html += ss.tmpl['login-gamelist'].render(teams)
             
-        $('.current_games').html( html )
+        $container.html( html )
+    
+    ss.rpc 'race.list', null, (err, races) ->
+        $container = $('.current_races')
+        html = "<div>no races</div>"
+        
+        unless races
+            $container.html(html)
+            return
+            
+        if races.length < 1
+            $container.html(html)
+            return
+        
+        html = ""
+        for r in races
+            html += ss.tmpl['login-gamelist'].render({ teams: r.teams })
+            
+        $container.html( html )
 
 
 exports.subscribe_team = (id)->
