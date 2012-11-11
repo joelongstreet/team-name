@@ -28,7 +28,7 @@ class window.Remote
                 @assign_team(data)
 
         game_started = false
-        
+
         ss.event.on 'coach', () =>
             @listener = new RowListener() if !@listener
             game_started = true
@@ -55,6 +55,10 @@ class window.Remote
         @listener = new RowListener()
 
     end_game : (winner) ->
+        $('.waiting').hide()
+        $('.playing').hide()
+        $('.waiting').removeClass('show')
+        $('.playing').removeClass('show')
         @listener?.die()
         @listener = null
             
