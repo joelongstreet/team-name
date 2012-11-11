@@ -4,8 +4,6 @@ class window.Remote
 
     constructor : ->
 
-        new RowListener()
-
         #stop the window from being scrolled
         document.addEventListener 'touchmove',
           (e)-> 
