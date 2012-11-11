@@ -1,14 +1,7 @@
 window.me = null
 
 $ ->
-    
-    #=== "remote" login screen
-    
-    $('body#login .start').click (e)->
-        e.preventDefault()
-        $('.modal').addClass('show')
-    
-    
+
     #=== "screen" login screen
     
     # submit create game on click
