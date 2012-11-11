@@ -5,15 +5,7 @@ var http = require('http'),
 
 // Define a single-page client called 'main'
 ss.client.define('main', {
-  view: 'desktop_login.jade',
-  css:  ['libs/reset.css', 'app.styl'],
-  code: ['libs/jquery.min.js', 'app'],
-  tmpl: '*'
-});
-
-// Define a single-page client called 'main'
-ss.client.define('login', {
-  view: 'desktop_login.jade',
+  view: 'login.jade',
   css:  ['libs/reset.css', 'app.styl'],
   code: ['libs/jquery.min.js', 'app'],
   tmpl: '*'
@@ -30,6 +22,7 @@ ss.client.define('remote', {
 // Serve this client on the root URL
 
 ss.http.route('/', function(req, res){
+  console.log('calling root')
   ua = req.headers['user-agent']
   if ( /mobile/i.test(ua) )
     res.serveClient('remote')
@@ -38,7 +31,7 @@ ss.http.route('/', function(req, res){
 });
 
 ss.http.route('/login', function(req, res){
-  res.serveClient('login');
+  res.serveClient('main');
 });
 
 ss.http.route('/remote', function(req, res){
@@ -47,10 +40,6 @@ ss.http.route('/remote', function(req, res){
   req.session.save(function () {
     res.serveClient('remote');
   })
-});
-
-ss.http.route('/mobile-login', function(req, res){
-  res.serveClient('mobile_login');
 });
 
 // Code Formatters
