@@ -14,8 +14,9 @@ $ ->
         e.preventDefault()
         token = $(this).siblings('input').val()
         ss.rpc 'system.sync', 'viewer', token, (err, data) ->
+            if err
+                alert 'no team remote found with specified token'
 
-    
     # submit on enter
     $('.login input').keyup (e)->
         if e.which == 13 then $('.login .btn').trigger("click")
@@ -29,28 +30,18 @@ $ ->
 
 # Shared Methods
 
-exports.join_team = (id)->
-    
-    # ss.rpc 'remote.sync', id, (err, res) ->
-    #     if err
-    #         console.error(id, err)
-    #     else
-    #         exports.list_teams()
-    #         exports.subscribe_team(id)
-
-
 exports.list_teams = ()-> 
 
-    ss.rpc 'team.list', null, (err, res)->
+    ss.rpc 'race.list', null, (err, races) ->
         $container = $('.current_games')
         html = ""
         
-        if res.length < 1
+        if races.length < 1
             $container.html("<div>no games currently</div>")
             return
             
-        for pair in res
-            html += ss.tmpl['login-gamelist'].render(pair)
+        for r in races
+            html += ss.tmpl['login-gamelist'].render(r.teams)
             
         $('.current_games').html( html )
 

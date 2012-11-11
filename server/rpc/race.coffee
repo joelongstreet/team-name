@@ -1,3 +1,5 @@
+gameMaster = require '../core/gamemaster'
+
 races = []
 
 exports.actions = (req, res, ss) ->
@@ -21,7 +23,8 @@ exports.actions = (req, res, ss) ->
             res(req.session)
     
     list: ()->
-        res('race.list', races)
+        res gameMaster.races
+        
     start: () ->
         this.startTime = (new Date()).getTime();
         res(true)
