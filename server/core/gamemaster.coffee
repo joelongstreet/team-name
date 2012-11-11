@@ -13,9 +13,8 @@ class GameMaster extends EventEmitter
         pair = []
 
         for t in @teams
-            pair.push t if t.isFull()
+            pair.push t if t and t.isFull()
             if pair.length == 2
-                @emit 'pair', pair
                 @removeTeam pair
                 @runGame pair
                 pair = []
@@ -23,23 +22,27 @@ class GameMaster extends EventEmitter
     runGame: (pair) ->
         race = @createRace pair
 
-        race.on 'progress', (progress) ->
-            ss.publish.channel race.id, 'progress', 
-                raceId: race.id
-                progress: progress
+        race.on 'surge', (data) ->
+            ss.publish.channel race.id, 'surge', data
         
         race.on 'end', (winner) =>
-            @endRace race
+            ss.publish.channel race.id, 'end',                     
+                raceId: race.id,
+                winner: winner
+
+            for r in @races
+                index = @races.indexOf r
+                @races.splice index, 1 if index >= 0
 
         race.start()
 
-    findTeam: (id) ->
+    findTeam: (teamId) ->
         for r in @races
             for t in r.teams
-                return t if t.id is id
+                return t if t.id is teamId
 
         for t in @teams
-            return t if t.id is id
+            return t if t.id is teamId
 
     addTeam: (team) ->
         @teams = @teams.concat team
@@ -51,15 +54,6 @@ class GameMaster extends EventEmitter
             index = @teams.indexOf t
             @teams.splice index, 1 if index >= 0
     
-    endRace: (race, winner) ->
-        ss.publish.channel race.id, 'end',                     
-            raceId: race.id,
-            winner: winner
-
-        for r in @races
-            index = @races.indexOf r
-            @races.splice index, 1 if index >= 0
-        
     createRace: (teams) ->
         race = new Race(teams)
         @races.push race
