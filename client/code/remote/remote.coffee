@@ -17,7 +17,8 @@ class window.Remote
             ss.rpc 'system.sync', 'remote'
         
         $('.tapper').click (e) =>
-            @listener.didAccelerationChange = true if @listener
+            if @listener
+                ss.rpc 'remote.rowBro'
         
         $('.start').click (e) =>
             $('.waiting').addClass('show')
@@ -98,9 +99,6 @@ class RowListener
 
             didAccelerationChange = false;
         , 100
-    
-    onClick: (e) ->
-        didAccelerationChange = true
 
     die: ->
-        clearInterval @listenerInterval
+        window.location.reload()
