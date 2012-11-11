@@ -4,7 +4,7 @@ class window.Remote
 
         ss.rpc 'system.getUserId', (userId) =>
             @identifier = userId
-            $('span.code').text(@identifier)
+            $('span.code, .reminder').text(@identifier)
             ss.rpc 'system.sync', 'remote'
 
 
