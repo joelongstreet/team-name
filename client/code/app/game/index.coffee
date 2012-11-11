@@ -18,8 +18,15 @@ class window.Game
             @start_game(data)
 
         # Listen and assign events
-        ss.event.on 'surge', (surge_data) =>
-            if surge_data.id == @da_boat.id
+        ss.event.on 'surge', (team, surge_data) =>
+            @da_boat.move_forward()
+            @stats.update(surge_data)
+
+            console.log surge_data
+            console.log team.id
+            console.log @data_boat.id
+
+            if team.id == @da_boat.id
                 @da_boat.move_forward()
                 @stats.update(surge_data)
                 @move_forward()
@@ -45,7 +52,7 @@ class window.Game
         # Row Call Out
         ss.event.on 'coach', () =>
             @da_boat.row_callout()
-            
+
 
     end_game : ->
         $('#finish_line').addClass 'show'
