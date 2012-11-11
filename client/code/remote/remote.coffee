@@ -1,3 +1,5 @@
+audio = require '/audio'
+
 class window.Remote
 
     constructor : ->
@@ -85,6 +87,7 @@ class RowListener
                 
             if didAccelerationChange
                 ss.rpc 'remote.rowBro'
+                audio.play '/audio/row.ogg'
 
 
             didAccelerationChange = false;
