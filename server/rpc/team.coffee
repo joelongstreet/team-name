@@ -17,7 +17,11 @@ exports.actions = (req, res, ss) ->
                 res "notFound", id
                 return
         
-        joined = team.addPerson req.sessionId, req.socketId
+        joined = team.addPerson 
+            sessionId: req.sessionId
+            socketId: req.socketId
+            cb: (race) ->
+                req.session.channel.subscribe race
 
         unless joined
             res "full", id
