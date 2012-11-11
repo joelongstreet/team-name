@@ -1,6 +1,8 @@
 
-<div class="game {{id}}">
-    <div class="name">A Game</div>
-    <div class="location">Kansas City, MO - USA</div>
+<div class="team {{id}}">
+    <div class="name">Player</div>
+    {{#if inGame}}
+    <div class="location">In a game</div>
+    {{/if}}
     <div class="code">{{id}}</div>
 </div>
