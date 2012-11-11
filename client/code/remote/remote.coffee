@@ -7,7 +7,6 @@ class window.Remote
             $('span.code, .reminder').text(@identifier)
             ss.rpc 'system.sync', 'remote'
 
-
         $('.start').click (e) =>
             $('.waiting').addClass('show')
 
@@ -66,6 +65,9 @@ class RowListener
                 ss.rpc 'remote.broDown'
             ), 3000
 
+        $('.playing .tapper').click (e) =>
+            didAccelerationChange = true
+            
         window.ondevicemotion = (e) ->
                 if didAccelerationChange then return
 
