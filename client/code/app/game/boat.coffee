@@ -1,10 +1,11 @@
 class window.Boat
 
     constructor : (data) ->
-
         @people = data.persons
 
     render : () ->
+
+        console.log @people
 
         $people = ''
         for person in @people
