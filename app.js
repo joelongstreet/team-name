@@ -28,7 +28,7 @@ var setOrCreateUID = function(req, cb){
 
 // Define a single-page client called 'main'
 ss.client.define('main', {
-  view: 'login.jade',
+  view: 'app.jade',
   css:  ['libs/reset.css', 'app.styl'],
   code: ['libs/jquery.min.js', 'app'],
   tmpl: '*'
@@ -47,7 +47,7 @@ ss.client.define('remote', {
 ss.http.route('/', function(req, res){
   ua = req.headers['user-agent']
   if ( /mobile/i.test(ua) )
-    res.serveClient('remote')
+    setOrCreateUID(req, function () { res.serveClient('remote') });
   else
     res.serveClient('main');
 });

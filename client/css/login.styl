@@ -8,31 +8,22 @@ body#login
         .right
             float       right
             width       50%
+
+            .explain
+                margin-bottom 35px
+                color       $white
+                line-height 130%
+                font-size   150%
+                text-shadow 2px 2px 0 black
+                p
+                    margin-bottom 30px
+            .login
+                margin-bottom  50px
             .btn
                 font-size 250%
-            input
-                width   75%
-
-        .login
-            .btn
                 float   right
-
-        .or
-            font-size   500%
-            text-align  center
-            color       $white
-            text-shadow 3px 3px 0px $red
-            margin      30px auto
-
-        .explain
-            margin-bottom 35px
-            color       $white
-            line-height 130%
-
-        .rando
-            font-size   300%
-            color       $white
-            text-shadow 3px 3px 0px $red
+            input
+                width   50%
 
         .left
             width       40%
@@ -48,7 +39,7 @@ body#login
                 background  $white
                 box-shadow  5px 5px 0 rgba(255,255,255,.5)
                 padding     10px
-                margin-bottom: 20px
+                margin-bottom 80px
 
                 .race,
                 .team
@@ -69,20 +60,29 @@ body#login
                     float   right
                     margin-right 10px
 
-        #create_game
-            width 100%
-            text-align center
+header
 
-    footer
-        height          50px
-        background      url($dirt) repeat
-        .trees
-            background  url($trees_upright) repeat
-            width       100%
-            height      90%
-        p 
-            background-color $white
-            display     inline-block
-            float       right
-            margin      10px
-            padding     7px
+    .ore
+        position            absolute
+        right               0
+        top                 17px
+        width               150px
+        height              150px
+        &:first-child
+            left            0
+            right           auto
+
+        .handle
+            position        absolute
+            width           75px
+            height          6px
+            background      $red url($red_pattern) repeat
+            box-shadow      2px 2px 0 $red2
+        .paddle
+            position        absolute
+            margin-left     -35px
+            margin-top      -5px
+            width           45px
+            height          25px
+            background      $red url($red_pattern) repeat
+            box-shadow      2px 2px 0 $red2

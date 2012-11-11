@@ -5,9 +5,11 @@ $ ->
     #=== "screen" login screen
     
     # submit create game on click
+    ###
     $('#create_game').click (e)->
         e.preventDefault()
         exports.join_team()
+    ###
     
     # submit on click    
     $('.login .btn').click (e)->
@@ -16,6 +18,8 @@ $ ->
         ss.rpc 'system.sync', 'viewer', token, (err, data) ->
             if err
                 alert 'no team remote found with specified token'
+            else
+                window.game = new Game()
 
     # submit on enter
     $('.login input').keyup (e)->
@@ -26,7 +30,7 @@ $ ->
         e.preventDefault()
         exports.join_team $.trim($(this).siblings('.code').text())
     
-    exports.list_teams()
+    #exports.list_teams()
 
 # Shared Methods
 
