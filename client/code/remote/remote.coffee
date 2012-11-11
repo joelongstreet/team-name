@@ -4,6 +4,12 @@ class window.Remote
 
     constructor : ->
 
+        #stop the window from being scrolled
+        document.addEventListener 'touchmove',
+          (e)-> 
+            e.preventDefault()
+          false
+
         ss.rpc 'system.getUserId', (userId) =>
             $('.start').show()
             @identifier = userId
