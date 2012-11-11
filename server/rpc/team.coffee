@@ -2,7 +2,7 @@ gameMaster = require '../core/gamemaster'
 Team = require '../core/team'
 
 exports.actions = (req, res, ss) ->
-    
+
     req.use 'session'
     req.use 'randomizer.str'
     
@@ -18,26 +18,18 @@ exports.actions = (req, res, ss) ->
                 return
         
         joined = team.addPerson 
-            sessionId: req.sessionId
-            socketId: req.socketId
-            cb: (race) ->
-                req.session.channel.subscribe race
+            userId: req.session.userId
 
         unless joined
             res "full", id
             return
 
-        req.session.channel.subscribe team.id
         req.session.teamId = team.id
+
         res null, 
             teamId: team.id
-            sessionId: req.sessionId
-            socketId: req.socketId
+            userId: req.session.userId
         
     list: ()->
         res "team.list", gameMaster.teams
         
-    leave: (id)->
-        req.session.channel.unsubscribe(id)
-        res "team.leave", true
-

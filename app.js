@@ -1,7 +1,30 @@
 // My SocketStream 0.3 app
 
 var http = require('http'),
-    ss = require('socketstream');
+    ss = require('socketstream'),
+    char_set = 'abcdefghijklmnpqrstuvwxyz123456789';
+
+var marlon_rando = function(len){
+  var rando = '';
+  var i = 0;
+  len = len || 5;
+  while( i < len ){
+    random_pos = Math.floor(Math.random() * char_set.length);
+    rando += char_set.substring(random_pos, random_pos + 1);
+    i++;
+  }
+  return rando;
+}
+
+var setOrCreateUID = function(req, cb){
+  if (req.session.userId) {
+    cb();
+  } else {
+    req.session.userId = marlon_rando();
+    req.session.save(cb);
+  }
+}
+
 
 // Define a single-page client called 'main'
 ss.client.define('main', {
@@ -22,7 +45,6 @@ ss.client.define('remote', {
 // Serve this client on the root URL
 
 ss.http.route('/', function(req, res){
-  console.log('calling root')
   ua = req.headers['user-agent']
   if ( /mobile/i.test(ua) )
     res.serveClient('remote')
@@ -31,15 +53,11 @@ ss.http.route('/', function(req, res){
 });
 
 ss.http.route('/login', function(req, res){
-  res.serveClient('main');
+  setOrCreateUID(req, function () { console.log(req); res.serveClient('login') });
 });
 
 ss.http.route('/remote', function(req, res){
-  req.session.remoteId = '12345'
-
-  req.session.save(function () {
-    res.serveClient('remote');
-  })
+  setOrCreateUID(req, function () { res.serveClient('remote') });
 });
 
 // Code Formatters
@@ -52,6 +70,11 @@ ss.client.templateEngine.use(require('ss-hogan'));
 
 // Minimize and pack assets if you type: SS_ENV=production node app.js
 if (ss.env === 'production') ss.client.packAssets();
+
+// we should have seen this coming...
+process.on('uncaughtException', function(e){
+  console.log('UNCAUGHT EXCEPTION!', e)
+});
 
 // Start web server
 var server = http.Server(ss.http.middleware);

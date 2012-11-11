@@ -2,10 +2,10 @@ class window.Remote
 
     constructor : ->
 
-        ss.rpc 'system.getSession', (res) =>
-            @identifier = res.remoteId
+        ss.rpc 'system.getUserId', (userId) =>
+            @identifier = userId
             $('span.code').text(@identifier)
-            ss.rpc 'remote.sync', res.remoteId
+            ss.rpc 'system.sync', 'remote'
 
 
         $('.start').click (e) =>
