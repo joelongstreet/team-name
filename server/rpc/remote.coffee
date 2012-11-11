@@ -4,9 +4,13 @@ exports.actions = (req, res, ss) ->
     req.use 'session'
 
     broDown: (message) ->
-        console.log 'bro down!'
+        team = gameMaster.findTeam req.session.teamId
+        team.broDown 
+            sessionId: req.sessionId
+            socketId: req.socketId
 
     rowBro: (message) ->
-        console.log gameMaster
-        team = gameMaster.findTeam req.session.team.id
-        team.row req.session.id
+        team = gameMaster.findTeam req.session.teamId
+        team.row 
+            sessionId: req.sessionId
+            socketId: req.socketId

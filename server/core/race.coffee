@@ -8,22 +8,14 @@ class Race extends EventEmitter
 
     start: () ->
         for t in @teams
-            t.on 'surge', () =>
-                @analyzeTeam t
+            t.on 'surge', (data) =>
+                @onSurge t, data
 
-    analyzeTeam: (team) ->
-        team.surge ||= 0
-        team.surge++
-
-        @emit 'surge', 
-            team: team
-            progress: team.surge
+    onSurge: (team, data) ->
+        @emit 'surge', data
 
         if team.surge >= 100
             @emit 'end', team 
             t.disband() for t in @teams
-
-    addTeam: (team) ->
-        console.log 'added team'
 
 module.exports = Race

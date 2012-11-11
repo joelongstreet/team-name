@@ -4,13 +4,6 @@ class window.Boat
 
         @people = data.people
 
-        ss.event.on 'surge', (surge_data) =>
-            if surge_data.id == data.id
-                @move_forward()
-
-        ss.event.on 'coach', () =>
-            @row_callout()
-
     render : () ->
 
         $people = ''

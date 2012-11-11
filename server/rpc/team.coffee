@@ -24,7 +24,7 @@ exports.actions = (req, res, ss) ->
             return
 
         req.session.channel.subscribe team.id
-        req.session.team = team
+        req.session.teamId = team.id
         res null, team.id
         
     list: ()->

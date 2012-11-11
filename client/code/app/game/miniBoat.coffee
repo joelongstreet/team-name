@@ -13,4 +13,6 @@ class window.MiniBoat
             new_boat.render()
 
 
-    update_position : (data) ->
+    update_position : (percent_complete) ->
+        new_position = -1 * (percent_complete/100 * 220)
+        @$view.css 'top' : new_position

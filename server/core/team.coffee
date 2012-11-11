@@ -8,6 +8,7 @@ class Team extends EventEmitter
         @setRowInterval 1
         @trackCount = 5
         @persons = []
+        @surge = 0
     
     setRowInterval: (interval) ->
         @interval = interval
@@ -35,15 +36,24 @@ class Team extends EventEmitter
         goodRows = 0
 
         #did every person have exactly 1 row in this period?
+        screwUps = []
         for k,v of current.people
-            goodRows++ if v is 1
+            if v is 1
+                goodRows++ 
+            else 
+                screwUps.push k
 
         #did atleast 80% of people successfuly row?
         rowPercentage = goodRows / @persons.length
 
         if rowPercentage > .8
             current.success = true
-            @emit 'surge', @period   
+            @emit 'surge', 
+                accuracy: rowPercentage
+                period: @period
+                mph: @interval / 10
+                surge: ++@surge
+                screwUps: screwUps
 
         @evaluateOverallPerformance()
 
@@ -63,11 +73,13 @@ class Team extends EventEmitter
                 v.success = false
         else if @interval < .1
             @setRowInterval .1
-
+    
+    broDown: (person) ->
+        
     row: (person) ->
         currentPeriod = @getCurrentPeriod()
-        currentPeriod.people[person] = 0 unless currentPeriod.people[person]
-        currentPeriod.people[person]++
+        currentPeriod.people[person.socketId] ||= 0 
+        currentPeriod.people[person.socketId]++
     
     disband: () ->
         @removeListeners()
