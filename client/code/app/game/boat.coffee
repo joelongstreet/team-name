@@ -2,7 +2,7 @@ class window.Boat
 
     constructor : (data) ->
 
-        @people = data.people
+        @people = data.persons
 
     render : () ->
 
