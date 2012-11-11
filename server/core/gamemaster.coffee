@@ -29,7 +29,6 @@ class GameMaster extends EventEmitter
                     pair = []
 
     runGame: (pair) ->
-        console.log 'rungame'
         race = @createRace pair
         
         @emitToRacerEverywhere race, 'start', race
@@ -44,7 +43,12 @@ class GameMaster extends EventEmitter
             @emitToRacerEverywhere race, 'end',
                 raceId: race.id,
                 winner: winner
-            p.inGame = false for p in pair
+            
+            for t in pair
+                for p in t.persons
+                    p.inGame = false 
+                    p.ready = false
+
             @removeRace race
 
         # give the UI a few seconds to show a countdown then start
@@ -67,18 +71,14 @@ class GameMaster extends EventEmitter
         args = Array.prototype.slice.call arguments, 1
 
         for t in race.teams
-            console.log t.persons
             for p in t.persons
-                console.log 'remoteEmit', p.remoteId
                 ss.publish.user.apply(ss, [p.remoteId].concat(args)) if p.remoteId
 
     emitToRacerViewers: (race) ->
         args = Array.prototype.slice.call arguments, 1
 
         for t in race.teams
-            console.log t.persons
             for p in t.persons
-                console.log 'viewerEmit', p.viewerId
                 ss.publish.user.apply(ss, [p.viewerId].concat(args)) if p.viewerId
     
     findTeamByRemoteId: (remoteId) ->
