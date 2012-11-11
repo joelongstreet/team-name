@@ -13,13 +13,7 @@ boats = [
     persons : ['33333', '33333', '33333', '33333', '33333', '33333', '33333', '33333']
 ]
 
-window.game = new Game(boats)
+#window.game = new Game(boats)
 
 ss.event.on 'start', (data) ->
    window.game = new Game(data.teams)
-
-#populate the game list
-exports.updateSession = ->
-    ss.rpc 'system.getSession', (res)->
-        window.me = res
-        console.log res

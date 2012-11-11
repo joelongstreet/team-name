@@ -12,7 +12,9 @@ $ ->
     # submit on click    
     $('.login .btn').click (e)->
         e.preventDefault()
-        exports.join_team $(this).siblings('input').val()
+        token = $(this).siblings('input').val()
+        ss.rpc 'system.sync', 'viewer', token, (err, data) ->
+
     
     # submit on enter
     $('.login input').keyup (e)->
@@ -23,21 +25,18 @@ $ ->
         e.preventDefault()
         exports.join_team $.trim($(this).siblings('.code').text())
     
-    # populate my local session object
-    ss.rpc 'system.getSession', (res)->
-        window.me = res
-        exports.list_teams()
+    exports.list_teams()
 
 # Shared Methods
 
 exports.join_team = (id)->
     
-    ss.rpc 'remote.sync', id, (err, res) ->
-        if err
-            console.error(id, err)
-        else
-            exports.list_teams()
-            exports.subscribe_team(id)
+    # ss.rpc 'remote.sync', id, (err, res) ->
+    #     if err
+    #         console.error(id, err)
+    #     else
+    #         exports.list_teams()
+    #         exports.subscribe_team(id)
 
 
 exports.list_teams = ()-> 

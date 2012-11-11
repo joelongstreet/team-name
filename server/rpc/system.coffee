@@ -1,4 +1,5 @@
 # Server-side Code
+gameMaster = require('../core/gamemaster')
 awaitingSync = {}
 
 exports.actions = (req, res, ss) ->
@@ -7,30 +8,33 @@ exports.actions = (req, res, ss) ->
     req.use('randomizer.str')
     
     sync: (type, token) ->
-        subscribed = false
 
-        # the remote represents the primary user
-        if type is 'remote'
+        handleViewer = (token) ->
+            console.log 'syncing viewer'
+            console.log awaitingSync
+            s = awaitingSync[token]
+
+            if s
+                player = gameMaster.findPlayer s.remoteId
+                player.remoteId = s.remoteId
+                player.viewerId = req.session.userId
+                res null, player
+                delete awaitingSync[token]
+                console.log 'pairing complete!', player
+            else
+                res "notFound"
+
+        handleRemote = () ->
+            console.log 'syncing remote'
             gameMaster.addPlayer req.session.userId
 
-        for k,v of awaitingSync
-            if k is token 
-                switch type
-                    when 'viewer' then v.viewerId = req.session.userId
-                    when 'remote' then v.remoteId = req.session.userId
-
-                player = gameMaster.findPlayer v.remoteId
-
-                player.remoteId = v.remoteId
-                player.viewerId = v.viewerId
-
-                subscribed = true
-
-        if not subscribed
-            awaitingSync[token] = 
-                viewerId: if type is 'viewer' then req.session.userId
-                remoteId: if type is 'remote' then req.session.userId
-
+            awaitingSync[req.session.userId] = 
+                remoteId: req.session.userId
+        
+        switch type
+            when 'viewer' then handleViewer token
+            when 'remote' then handleRemote token
+    
     getUserId: () ->
         res req.session.userId
     
