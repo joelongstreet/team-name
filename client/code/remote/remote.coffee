@@ -9,10 +9,10 @@ class window.Remote
           false
 
         ss.rpc 'system.getUserId', (userId) =>
+            $('.start').show()
             @identifier = userId
             $('span.code, .reminder').text(@identifier)
             ss.rpc 'system.sync', 'remote'
-
 
         $('.start').click (e) =>
             $('.waiting').addClass('show')
@@ -23,9 +23,7 @@ class window.Remote
 
 
         ss.event.on 'start', (data) =>
-            alert 'game starting'
             @start_game(data)
-
 
         ss.event.on 'end', (winner) =>
             @end_game(winner)
@@ -72,6 +70,9 @@ class RowListener
                 ss.rpc 'remote.broDown'
             ), 3000
 
+        $('.playing .tapper').click (e) =>
+            didAccelerationChange = true
+            
         window.ondevicemotion = (e) ->
                 if didAccelerationChange then return
 
