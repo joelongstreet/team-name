@@ -7,14 +7,14 @@ exports.actions = (req, res, ss) ->
     sync: (id) ->
         subscribed = false
 
-        subscribe: () ->
+        subscribe = () ->
             subscribed = true
             req.session.channel.subscribe "remote-#{id}"
-        
+            
         for k,v of awaitingSync
             if v.id is id 
                 subscribe()
-                v.subscribe()
+                v.cb()
 
         if not subscribed
             awaitingSync[req.socketId] =

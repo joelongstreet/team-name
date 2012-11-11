@@ -20,3 +20,4 @@ ss.event.on 'start', (data) ->
 exports.updateSession = ->
     ss.rpc 'system.getSession', (res)->
         window.me = res
+        console.log res

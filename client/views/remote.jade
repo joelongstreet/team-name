@@ -7,7 +7,7 @@ extends login
 block main
 
     h2 Your Room Code is
-        span.code= 12345
+        span.code Generating...
 
     a.btn.start(href='#') Start
 
@@ -16,8 +16,3 @@ block main
         //h3 x
     .playing
         p Now Playing
-
-    script(type="text/javascript") 
-        ss.server.on('ready', function(){
-            remote = new Remote()
-        });

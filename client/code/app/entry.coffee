@@ -10,7 +10,6 @@ ss.server.on 'reconnect', ->
   console.log('Connection back up :-)')
 
 ss.server.on 'ready', ->
-  console.log arguments
   # Wait for the DOM to finish loading
   $ ->
     

@@ -23,7 +23,7 @@ ss.client.define('login', {
 ss.client.define('remote', {
   view: 'remote.jade',
   css:  ['libs/reset.css', 'app.styl'],
-  code: ['libs/jquery.min.js', 'app'],
+  code: ['libs/jquery.min.js', 'remote'],
   tmpl: '*'
 });
 
@@ -42,7 +42,11 @@ ss.http.route('/login', function(req, res){
 });
 
 ss.http.route('/remote', function(req, res){
-  res.serveClient('remote');
+  req.session.remoteId = '12345'
+
+  req.session.save(function () {
+    res.serveClient('remote');
+  })
 });
 
 ss.http.route('/mobile-login', function(req, res){

@@ -28,7 +28,6 @@ $ ->
         window.me = res
         exports.list_teams()
 
-
 # Shared Methods
 
 exports.join_team = (id)->
@@ -59,7 +58,6 @@ exports.list_teams = ()->
 
 exports.subscribe_team = (id)->
     ss.server.on 'start', (data) ->
-        console.log 'started', data
         window.game = new Game(data)
     ss.server.on 'surge', ->
         console.log 'surge', arguments
