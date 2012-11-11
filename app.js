@@ -73,9 +73,11 @@ ss.client.templateEngine.use(require('ss-hogan'));
 if (ss.env === 'production') ss.client.packAssets();
 
 // we should have seen this coming...
+/*
 process.on('uncaughtException', function(e){
   console.log('UNCAUGHT EXCEPTION!', e)
 });
+*/
 
 // Start web server
 var server = http.Server(ss.http.middleware);
