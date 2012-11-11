@@ -1,25 +1,35 @@
 EventEmitter = require('events').EventEmitter
 Race = require './race'
+Team = require './team'
 ss = require('socketstream').api
 
 class GameMaster extends EventEmitter
 
-    constructor: (@teams = [], @races = [], @players = []) ->
+    constructor: (@teams = [], @races = [], @players = {}) ->
         setInterval () =>
             @pairUpTeams()
         , 3000
 
     pairUpTeams: () ->
         pair = []
+        for k,p of @players
+            if p?.inGame or not p.ready
+                continue
 
-        for t in @teams
-            pair.push t if t and t.isFull()
+            team = new Team(p.remoteId)
+
+            pair.push team
+
             if pair.length == 2
-                @removeTeam pair
                 @runGame pair
                 pair = []
 
     runGame: (pair) ->
+
+        for p in pair
+            p.inGame = true 
+            p.ready = false
+
         race = @createRace pair
         
         @emitToRacerEverywhere race, 'start', race
@@ -34,7 +44,7 @@ class GameMaster extends EventEmitter
             @emitToRacerEverywhere race, 'end',
                 raceId: race.id,
                 winner: winner
-            @removeTeam pair
+            p.inGame = false for p in pair
             @removeRace race
 
         race.start()
@@ -67,9 +77,18 @@ class GameMaster extends EventEmitter
                 console.log 'viewerEmit', p.viewerId
                 ss.publish.user.apply(ss, [p.viewerId].concat(args)) if p.viewerId
     
-    findTeamByPlayer: (userId) ->
+    findTeamByRemoteId: (remoteId) ->
+        for r in @races
+            for t in r.teams
+                for p in t.persons
+                    if p.remoteId is remoteId
+                        return t
 
-    
+        for t in @teams
+            for p in t.persons
+                if p.remoteId is remoteId
+                    return t
+
     findTeam: (teamId) ->
         for r in @races
             for t in r.teams
@@ -85,11 +104,15 @@ class GameMaster extends EventEmitter
         delete @players[userId]
 
     addPlayer: (userId) ->
+        if not userId
+            return
+
         p = @players[userId] 
 
         @players[userId] = 
             remoteId: userId
             viewerId: p.viewerId if p
+            ready: p.ready if p
 
     addTeam: (team) ->
         @teams = @teams.concat team
