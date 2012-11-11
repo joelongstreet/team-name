@@ -22,6 +22,8 @@ class GameMaster extends EventEmitter
     runGame: (pair) ->
         race = @createRace pair
         
+        @emitToRacerEverywhere race, 'start', race
+
         race.on 'coach', (team) =>
             @emitToTeamViewers team, 'coach'
 
@@ -51,14 +53,18 @@ class GameMaster extends EventEmitter
         args = Array.prototype.slice.call arguments, 1
 
         for t in race.teams
+            console.log t.persons
             for p in t.persons
+                console.log 'remoteEmit', p.remoteId
                 ss.publish.user.apply(ss, [p.remoteId].concat(args)) if p.remoteId
 
     emitToRacerViewers: (race) ->
         args = Array.prototype.slice.call arguments, 1
 
         for t in race.teams
+            console.log t.persons
             for p in t.persons
+                console.log 'viewerEmit', p.viewerId
                 ss.publish.user.apply(ss, [p.viewerId].concat(args)) if p.viewerId
     
     findTeamByPlayer: (userId) ->
@@ -110,9 +116,7 @@ class GameMaster extends EventEmitter
             teams: teams
 
         t.start() for t in teams
-            
-        @emitToRacerEverywhere race, 'start', data
-
+        
         # let the match maker know we've started a new race        
         ss.publish.all 'mm.start', data
         

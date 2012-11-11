@@ -17,6 +17,7 @@ class window.Remote
 
 
         ss.event.on 'start', (data) =>
+            alert 'game starting'
             @start_game(data)
 
 
