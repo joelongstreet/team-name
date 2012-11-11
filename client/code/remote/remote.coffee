@@ -24,7 +24,6 @@ class window.Remote
             $('.waiting').addClass('show')
 
             ss.rpc 'team.join', (err, data) =>
-                console.log data
                 @assign_team(data)
 
         game_started = false

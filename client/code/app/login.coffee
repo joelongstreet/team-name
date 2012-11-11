@@ -29,7 +29,6 @@ $ ->
 exports.list_teams = ()-> 
     
     ss.rpc 'team.list', (err, teams) ->
-        console.log("team.list", teams)
         $container = $('.current_teams')
         html = ""
         
