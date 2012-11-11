@@ -2,12 +2,14 @@ window.me = null
 
 $ ->
 
-    #=== "mm" login screen
+    #=== "screen" login screen
     
     # submit create game on click
+    ###
     $('#create_game').click (e)->
         e.preventDefault()
         exports.join_team()
+    ###
     
     # submit on click    
     $('.login .btn').click (e)->
@@ -16,6 +18,8 @@ $ ->
         ss.rpc 'system.sync', 'viewer', token, (err, data) ->
             if err
                 alert 'no team remote found with specified token'
+            else
+                window.game = new Game()
 
     # submit on enter
     $('.login input').keyup (e)->
@@ -26,19 +30,15 @@ $ ->
         e.preventDefault()
         exports.join_team $.trim($(this).siblings('.code').text())
     
-    exports.list_teams()
-    
-    ss.server.on 'mm.start', ->
-        console.log("game started")
+    #exports.list_teams()
+
 # Shared Methods
 
 exports.list_teams = ()-> 
-        
+
     ss.rpc 'race.list', null, (err, races) ->
         $container = $('.current_games')
         html = ""
-        
-        unless races then return
         
         if races.length < 1
             $container.html("<div>no games currently</div>")

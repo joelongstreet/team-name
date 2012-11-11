@@ -1,6 +1,6 @@
 class window.Game
 
-    constructor : (boats) ->
+    constructor : () ->
 
         @$view = $(ss.tmpl['game-index'].render())
 
@@ -14,15 +14,18 @@ class window.Game
         @stats = new Stats()
         @stats.render()
 
-        # Build out mini boats for preview section
-        @mini_boats = []
-        for boat in boats
-            @mini_boats.push new MiniBoat(boat)
+        ss.event.on 'start', (data) ->
+            @countdown()
 
-        # Set the default selected boat as the first mini boat
-        @da_boat = new Boat(boats[0])
-        @da_boat.render()
-        @da_boat.$view.addClass 'start'
+            # Build out mini boats for preview section
+            @mini_boats = []
+            for boat in data.boats
+                @mini_boats.push new MiniBoat(boat)
+
+            # Set the default selected boat as the first mini boat
+            @da_boat = new Boat(boats[0])
+            @da_boat.render()
+            @da_boat.$view.addClass 'start'
 
         # Listen and assign events
         ss.event.on 'surge', (surge_data) =>
@@ -38,8 +41,6 @@ class window.Game
         # Row Call Out
         ss.event.on 'coach', () =>
             @da_boat.row_callout()
-
-        @countdown()
 
 
     end_game : ->
