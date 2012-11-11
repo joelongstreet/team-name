@@ -12,7 +12,6 @@ class window.Boat
 
         @$view = $(ss.tmpl['game-boat'].render())
         @$view.find('.people').append $people
-        @$view.find('.people').append $people
         @$rowCallout = @$view.find('#row')
 
         css_class = ''
