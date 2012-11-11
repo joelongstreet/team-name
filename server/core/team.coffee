@@ -19,7 +19,7 @@ class Team extends EventEmitter
         newInterval = 1000 * @interval
 
         setInterval () =>
-            @emit 'coach', @interval
+            @emit 'coach', @, @interval
             @evaluateRows()
             @startNewPeriod(++@period % @trackCount)
         , newInterval 
@@ -51,7 +51,7 @@ class Team extends EventEmitter
 
         if rowPercentage > .8
             current.success = true
-            @emit 'surge', 
+            @emit 'surge', @,
                 accuracy: rowPercentage
                 period: @period
                 mph: @interval / 10

@@ -15,17 +15,21 @@ class GameMaster extends EventEmitter
         for t in @teams
             pair.push t if t and t.isFull()
             if pair.length == 2
+                @removeTeam pair
                 @runGame pair
                 pair = []
 
     runGame: (pair) ->
         race = @createRace pair
+        
+        race.on 'coach', (team) =>
+            @emitToTeamViewers team, 'coach'
 
         race.on 'surge', (data) =>
             @emitToRacerViewers race, 'surge', data
         
         race.on 'end', (winner) =>
-            @emitToRacerViewers race, 'end',
+            @emitToRacerEverywhere race, 'end',
                 raceId: race.id,
                 winner: winner
             @removeTeam pair
@@ -33,21 +37,29 @@ class GameMaster extends EventEmitter
 
         race.start()
 
+    emitToTeamViewers: (team) ->
+        args = Array.prototype.slice.call arguments, 1
+
+        for p in team.persons
+            ss.publish.user.apply(ss, [p.viewerId].concat(args)) if p.viewerId
+
     emitToRacerEverywhere: () ->
-        emitToRacerRemotes.apply this, arguments
-        emitToRacerViewers.apply this, arguments
+        @emitToRacerRemotes.apply this, arguments
+        @emitToRacerViewers.apply this, arguments
 
     emitToRacerRemotes: (race) ->
-        args = arguments.slice 1
+        args = Array.prototype.slice.call arguments, 1
 
-        for p in t.persons
-            ss.publish.user.apply(ss, [p.remoteId].concat(args)) if p.remoteId
+        for t in race.teams
+            for p in t.persons
+                ss.publish.user.apply(ss, [p.remoteId].concat(args)) if p.remoteId
 
     emitToRacerViewers: (race) ->
-        args = arguments.slice 1
+        args = Array.prototype.slice.call arguments, 1
 
-        for p in t.persons
-            ss.publish.user.apply(ss, [p.viewerId].concat(args))
+        for t in race.teams
+            for p in t.persons
+                ss.publish.user.apply(ss, [p.viewerId].concat(args)) if p.viewerId
     
     findTeamByPlayer: (userId) ->
 
@@ -98,7 +110,7 @@ class GameMaster extends EventEmitter
 
         t.start() for t in teams
             
-        @emitToRacers race, 'start', data
+        @emitToRacerEverywhere race, 'start', data
 
         # let the match maker know we've started a new race        
         ss.publish.channel 'mm', 'start', data
