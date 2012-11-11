@@ -28,23 +28,24 @@ class window.Game
                     if surge_data.id == boat.id
                         boat.update_position(surge_data.position)
 
-        # Row Call Out
-        ss.event.on 'coach', () =>
-            @da_boat.row_callout()
 
     start_game : (data) ->
         @countdown()
 
         # Build out mini boats for preview section
         @mini_boats = []
-        for boat in data.boats
+        for boat in data.teams
             @mini_boats.push new MiniBoat(boat)
 
         # Set the default selected boat as the first mini boat
-        @da_boat = new Boat(data.boats[0])
+        @da_boat = new Boat(data.teams[0])
         @da_boat.render()
         @da_boat.$view.addClass 'start'
 
+        # Row Call Out
+        ss.event.on 'coach', () =>
+            @da_boat.row_callout()
+            
 
     end_game : ->
         $('#finish_line').addClass 'show'
