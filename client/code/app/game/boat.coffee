@@ -2,8 +2,7 @@ class window.Boat
 
     constructor : (data) ->
         @people = data.persons
-        @id = data.id
-        console.log 'boat id', @id
+        @id     = data.id
 
     render : () ->
 

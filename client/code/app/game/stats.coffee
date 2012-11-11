@@ -16,5 +16,5 @@ class window.Stats
     update : (data) ->
         @$accuracy.text data.accuracy
         @$mph.text data.mph
-        @$distance.text data.distance
-        @$screws.text data.screwUps
+        @$distance.text(data.surge + 'yards')
+        @$screws.text data.screwUps.length
