@@ -73,11 +73,13 @@ class Team extends EventEmitter
                 v.success = false
         else if @interval < .1
             @setRowInterval .1
-
+    
+    broDown: (person) ->
+        
     row: (person) ->
         currentPeriod = @getCurrentPeriod()
-        currentPeriod.people[person] = 0 unless currentPeriod.people[person]
-        currentPeriod.people[person]++
+        currentPeriod.people[person.socketId] ||= 0 
+        currentPeriod.people[person.socketId]++
     
     disband: () ->
         @removeListeners()
