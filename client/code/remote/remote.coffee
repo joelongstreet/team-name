@@ -2,6 +2,12 @@ class window.Remote
 
     constructor : ->
 
+        #stop the window from being scrolled
+        document.addEventListener 'touchmove',
+          (e)-> 
+            e.preventDefault()
+          false
+
         ss.rpc 'system.getUserId', (userId) =>
             @identifier = userId
             $('span.code, .reminder').text(@identifier)
