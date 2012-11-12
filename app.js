@@ -50,7 +50,7 @@ ss.http.route('/', function(req, res){
   if ( /mobile/i.test(ua) )
     setOrCreateUID(req, function () { res.serveClient('remote') });
   else
-    res.serveClient('main');
+    setOrCreateUID(req, function () { console.log(req); res.serveClient('main') });
 });
 
 ss.http.route('/login', function(req, res){
