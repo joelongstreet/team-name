@@ -79,8 +79,8 @@ var server = http.Server(ss.http.middleware);
 server.listen(3000);
 
 // Start ss-console
-var ssconsole = require('ss-console')(ss);
-ssconsole.listen(5000);
+//var ssconsole = require('ss-console')(ss);
+//ssconsole.listen(5000);
 
 // Start SocketStream
 ss.start(server);
