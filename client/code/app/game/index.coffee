@@ -81,31 +81,26 @@ class window.Game
         countdown_int = null
         $countdown  = $('#countdown')
         $line       = $('#starting_line')
+        count       = 3
+        
+        $countdown.find('waiting').remove()
+        
+        # countdown timer from 3,2,1
+        countit = ->
+            $countdown.text count
+            if count > 0
+                --count
+                setTimeout countit, 1000
+            else
+                $countdown.text 'GO'
+                $countdown.toggleClass 'flashy'
 
-        setTimeout (=>
-            $countdown.text 'GO'
-
-            countdown_int = setInterval (=>
-                $countdown.toggleClass 'flash'
-            ), 200
-
-            setTimeout (=>
-                $countdown.fadeOut 'fast'
-                @da_boat.$view.removeClass 'start'
-                $line.addClass 'go_away'
-                clearInterval countdown_int
-            ), 1500
-        ), 4000
-
-        setTimeout (=>
-            $countdown.text '1'
-        ), 3000
-
-        setTimeout (=>
-            $countdown.text '2'
-        ), 2000
-
-        setTimeout (=>
-            $countdown.find('waiting').remove()
-            $countdown.text '3'
-        ), 1000
+                setTimeout (=>
+                    $countdown.fadeOut 'fast'
+                    @da_boat.$view.removeClass 'start'
+                    $line.addClass 'go_away'
+                    clearInterval countdown_int
+                ), 1500
+        
+        countit()
+        
